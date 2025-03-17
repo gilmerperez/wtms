@@ -1,82 +1,96 @@
-import { User } from '../models/index.js';
-import { signToken, AuthenticationError } from '../utils/auth.js'; 
+import { User } from "../models/userModel"
+import { Warehouse } from "../models/warehouseModel"
+import { Truck } from "../models/truckModel"
+import {signToken, AuthenicationError} from './WTMS/server/src/utils/auth'
 
-// Define types for the arguments
-interface AddUserArgs {
-  input:{
-    username: string;
-    email: string;
-    password: string;
-    role: string;
-  }
-}
-
-interface LoginUserArgs {
-  email: string;
-  password: string;
-}
-
-interface UserArgs {
-  username: string;
-}
 
 
 const resolvers = {
-  Query: {
-    users: async () => {
-      return User.find().populate('thoughts');
+    Query: {
+        getUsers: async () => {
+            return await User.find()
+        },
+        getUser: async (_parent: unknown, { userId }) => {
+            return await User.findone({ _id: userId });
+        },
+        getWarehouses: async () => {
+            return await Warehouse.find()
+        },
+        getWarehouse: async (_parent: unknown, { warehouseId }) => {
+            return await Warehouse.findOne({ _id: warehouseId });
+        },
+        getTrucks: async () => {
+            return await Truck.find()
+        },
+           
+        getTruck: async (_parent: unknown, { truckId }) => {
+        return await Truck.findOne({ _id: truckId });
+        },
     },
-    user: async (_parent: any, { username }: UserArgs) => {
-      return User.findOne({ username }).populate('thoughts');
-    },
+    Mutation: {
+        login: async (_parent: unknown, { email, password }) => {
+            const user = await User.findOne({ email });
+            if (!user) {
+                //NEED THIS FROM GILMER, IN THE AUTH.TS JWT FILE
+                throw AuthenticationError;
+            }
+            const correctPw = await user.isCorrectPassword(password)
+            if (!correctPw) {
+                //REFER TO LINE 31
+                throw new AuthenticationError('Invalid Password')
+            }
+            //REFER TO LINE 31
+            const token = signToken(user.email, user.password)
+            return { token, user}
+        },
+        addUser: async (_parent: unknown, { name, email, password, role, status }) => {
+            const newUser = await new User.create({
+                name, email, password, role, status
+            });
+            return newUser;
+        },
+        addWarehouse: async (_parent: unknown, { name, location, status, items, quantity }) => {
+            const newWarehouse = await new Warehouse({
+                name, location, status, items, quantity
+            });
+            return newWarehouse;
+        },
+        addTruck: async (_parent: unknown, { driver, status }) => {
+            const newTruck = await new Truck({
+                driver, status
+            });
 
-    // Query to get the authenticated user's information
-    // The 'me' query relies on the context to check if the user is authenticated
-    me: async (_parent: any, _args: any, context: any) => {
-      // If the user is authenticated, find and return the user's information along with their thoughts
-      if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('thoughts');
-      }
-      // If the user is not authenticated, throw an AuthenticationError
-      throw new AuthenticationError('Could not authenticate user.');
+            return newTruck;
+        },
+        updateUserStatus: async (_parent: unknown, { userId, status }) => {
+            return await User.findByIdAndUpdate(
+                {_id: userId},
+                // {$addToSet: {status: Boolean}},
+                {$addToSet: status},
+
+                {new: true, runValidators: true}
+            )
+
+        },
+        // deleteUser: async (_parent: unknown, {userId}) => {
+        //     return await User.findByIdAndDelete(userId);
+        // },
+        //WE NEED TO DELETE SOMETHING TO FULFILL THE PROJECT'S CRITERIA
+        updateWarehouseStatus: async (_parent: unknown, { warehouseId, status }) => {
+            return await Warehouse.findByIdAndUpdate(
+                {_id: warehouseId},
+                {$addToSet: status},
+                {new: true, runValidators: true}
+            );
+        },
+        updateTruckStatus: async (_parent: unknown, { truckId, status }) => {
+            return await Truck.findByIdAndUpdate(
+                {_id: truckId},
+                {$addToSet: status},
+                {new: true, runValidators: true}
+            );
+        },
+
     },
-  },
-  Mutation: {
-    addUser: async (_parent: any, { input }: AddUserArgs) => {
-      // Create a new user with the provided username, email, and password
-      const user = await User.create({ ...input });
-    
-      // Sign a token with the user's information
-      const token = signToken(user.username, user.email, user._id, user.role);
-    
-      // Return the token and the user
-      return { token, user };
-    },
-    
-    login: async (_parent: any, { email, password }: LoginUserArgs) => {
-      // Find a user with the provided email
-      const user = await User.findOne({ email });
-    
-      // If no user is found, throw an AuthenticationError
-      if (!user) {
-        throw new AuthenticationError('Could not authenticate user.');
-      }
-    
-      // Check if the provided password is correct
-      const correctPw = await user.isCorrectPassword(password);
-    
-      // If the password is incorrect, throw an AuthenticationError
-      if (!correctPw) {
-        throw new AuthenticationError('Could not authenticate user.');
-      }
-    
-      // Sign a token with the user's information
-      const token = signToken(user.username, user.email, user._id, user.role);
-    
-      // Return the token and the user
-      return { token, user };
-    }
-  },
 };
-
-export default resolvers;
+export default resolvers
