@@ -1,15 +1,22 @@
-import ReactDOM from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import ReactDOM from "react-dom/client";
+import AuthService from "./utils/auth";
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 
+import App from "./App.jsx";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import ErrorPage from "./pages/Error";
+import Fleet from "./pages/Fleet";
+import UserMgt from "./pages/UserMgt";
+import Landing from "./pages/Landing.js";
+import Warehouse from "./pages/Warehouse";
 
-import App from './App.jsx';
-import Landing from './pages/Landing.js';
-import Signup from './pages/Signup';
-import Login from './pages/Login';
-import Fleet from './pages/Fleet';
-import UserMgt from './pages/UserMgt';
-import Warehouse from './pages/Warehouse';
-import ErrorPage from './pages/Error';
+// ProtectedRoute function to block access to website if user not loged in
+const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
+  const isLoggedIn = AuthService.loggedIn();
+  // Redirect to login if not logged in
+  return isLoggedIn ? children : <Navigate to="/login" replace />;
+};
 
 const router = createBrowserRouter([
   {
@@ -19,15 +26,49 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Landing />
-      }, {
-        path: '/login',
-        element: <Login />
-      }, {
-        path: '/signup',
-        element: <Signup />
-      }
-    ]
+        element: <Login />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/signup",
+        element: <Signup />,
+      },
+      {
+        path: "/landing",
+        element: (
+          <ProtectedRoute>
+            <Landing />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/fleet",
+        element: (
+          <ProtectedRoute>
+            <Fleet />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/user-mgt",
+        element: (
+          <ProtectedRoute>
+            <UserMgt />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/warehouse",
+        element: (
+          <ProtectedRoute>
+            <Warehouse />
+          </ProtectedRoute>
+        ),
+      },
+    ],
   },
 ]);
 
