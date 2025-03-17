@@ -86,7 +86,7 @@ const Login = () => {
   return (
     <div style={styles.container}>
       <div style={styles.topBar}>
-        <img src="/logo.png" alt="Logo" style={styles.logo} />
+        <h2>WTMS Logo</h2>
       </div>
 
       <div style={styles.loginBox}>

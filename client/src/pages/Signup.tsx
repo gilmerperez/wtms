@@ -16,7 +16,7 @@ const styles = {
   topBar: {
     width: "100%",
     height: "60px",
-    backgroundColor: "#ff8c42", // Orange color
+    backgroundColor: "#ff8c42",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -45,13 +45,13 @@ const styles = {
   input: {
     padding: "10px",
     marginBottom: "15px",
-    border: "1px solid #ff8c42", // Orange border
+    border: "1px solid #ff8c42",
     borderRadius: "4px",
     outline: "none",
   },
   button: {
     padding: "10px",
-    backgroundColor: "#ff8c42", // Orange background
+    backgroundColor: "#ff8c42",
     color: "#fff",
     border: "none",
     borderRadius: "4px",
@@ -67,7 +67,7 @@ const Signup = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState<"Admin" | "Manager" | "Driver">("Admin"); // Default role
+  const [role, setRole] = useState<"Admin" | "Manager" | "Driver">("Admin");
   const [addUser, { error }] = useMutation<
     { addUser: { token: string } },
     {
@@ -106,7 +106,7 @@ const Signup = () => {
   return (
     <div style={styles.container}>
       <div style={styles.topBar}>
-        <img src="/logo.png" alt="Logo" style={styles.logo} />
+        <h2>WTMS Logo</h2>
       </div>
 
       <div style={styles.signupBox}>
