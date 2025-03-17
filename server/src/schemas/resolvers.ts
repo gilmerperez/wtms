@@ -102,6 +102,27 @@ const resolvers = {
 
       return newTruck;
     },
+    addItem: async (_parent:unknown, {warehouseId, item}: {warehouseId: number, item: string}) => {
+      return await Warehouse.findByIdAndUpdate(
+        warehouseId,
+         {$push: {items: item}},
+        {new: true, runValidators: true}
+      );
+    },
+    updateItem: async (_parent: unknown, {warehouseId, index, newItem}: {warehouseId: number, index: number, newItem: string}) => {
+      return await Warehouse.findOneAndUpdate(
+        {_id: warehouseId},
+        {$set: {[`items.${index}`]: newItem}},
+        {new: true, runValidators: true}
+      )
+    },
+    deleteItem: async(_parent: unknown, {warehouseId, item}: {warehouseId: number, item: string}) =>{
+      return await Warehouse.findByIdAndUpdate(
+        warehouseId,
+        {$pull: {items:item}},
+        {new:true, runValidators: true}
+      )
+    },
     updateUserStatus: async (_parent: unknown, { userId, status }: UpdateUserStatus) => {
       return await User.findByIdAndUpdate(
         { _id: userId },
