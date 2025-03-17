@@ -1,44 +1,50 @@
 import { Link } from "react-router-dom";
-import login from "../utils/login";
+import AuthService from "../utils/auth";
 
+const NavigationBar = () => {
+  const handleSignOut = () => {
+    AuthService.logout();
+  };
 
-/* Set the width of the side navigation to 250px */
+  return (
+    <div className="topnav">
+      <div id="mySidenav" className="sidenav">
+        <a
+          href="javascript:void(0)"
+          className="closebtn"
+          onClick={() => closeNav()}
+        >
+          &times;
+        </a>
+        <Link to="/landing">Dashboard</Link>
+        <Link to="/fleet">Fleet Management</Link>
+        <Link to="/user-mgt">User Management</Link>
+        <Link to="/warehouse">Warehouse Management</Link>
+        <button
+          onClick={handleSignOut}
+          style={{ marginTop: "10px", color: "#ff8c42" }}
+        >
+          Sign Out
+        </button>
+      </div>
+      <span onClick={() => openNav()}>☰</span>
+    </div>
+  );
+};
+
+// Helper functions to open/close the navigation bar
 function openNav() {
   const sidenav = document.getElementById("mySidenav");
   if (sidenav) {
     sidenav.style.width = "250px";
   }
 }
-  const sidenav = document.getElementById("mySidenav");
-  if (sidenav) {
-    sidenav.style.width = "0";
-  }
-/* Set the width of the side navigation to 0 */
+
 function closeNav() {
   const sidenav = document.getElementById("mySidenav");
   if (sidenav) {
     sidenav.style.width = "0";
   }
-}
-
-
-const  NavigationBar = () => {
-  return (
- <>
- <div className="topnav">
-  
-    <div/>
-    <div id="mySidenav" className="sidenav">
-      <a href="javascript:void(0)" className="closebtn" onClick={() => closeNav()}>&times;</a>
-      <a href="/">Dashboard</a>
-      <a href="/UserMgt">User Management</a>
-      <a href="/Warehouse">Warehouse Management</a>
-      <a href="/Fleet">Fleet Management</a>
-    </div>
-    <span onClick={() => openNav()}>open</span>
-      </div>
-    </>
-);
 }
 
 export default NavigationBar;

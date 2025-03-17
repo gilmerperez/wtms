@@ -1,45 +1,39 @@
-import Dashboard from "../components/Dashboard";
-import { useState, 
-  // useEffect, 
-  // useLayoutEffect
- } from "react";
-import auth from "../utils/auth";
-import ErrorPage from "./Error";
-import { UserLogin } from "../interfaces/UserLogin";
-import { retrieveUser } from "../utils/login";
-
-
+import { Link } from "react-router-dom";
+import AuthService from "../utils/auth";
+import { useState, useEffect, } from "react";
 
 const Landing = () => {
- const [loginCheck, setLoginCheck] = useState(false);
- const [user, setUser] = useState<UserLogin | null>(null);
+  const [user, setUser] = useState<{ username: string } | null>(null);
 
- //Todo: check auth status and get user info from local storage or cookie
- //Todo: replace code below with auth logic
- //* Imports for auth login logic should be made in /utils/login.tsx
-
-
+  useEffect(() => {
+    // Fetch user data from the token
+    const profile = AuthService.getProfile();
+    if (profile) {
+      setUser({ username: profile.data.username });
+    }
+  }, []);
 
   return (
     <main>
       <h1>Landing</h1>
-      {auth.loggedIn() ? (
-        <Dashboard />
+      {AuthService.loggedIn() ? (
+        <>
+          <p>Welcome, {user?.username}!</p>
+          <p>You are now logged in.</p>
+          <div>
+            <Link to="/user-mgt">Go to User Management</Link>
+            <br />
+            <Link to="/warehouse">Go to Warehouse Management</Link>
+            <br />
+            <Link to="/fleet">Go to Fleet Management</Link>
+          </div>
+        </>
       ) : (
         <>
           <p>Welcome to the Landing Page</p>
           <p>Please log in or sign up to continue.</p>
         </>
       )}
-      {loginCheck && !user ? (
-        <ErrorPage />
-      ) : null}
-      {loginCheck && user ? (
-        <div className="dashboard">
-          <h1>Dashboard</h1>
-          <p>Welcome, {user.username}!</p>
-        </div>
-      ) : null}
     </main>
   );
 };

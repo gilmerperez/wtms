@@ -6,8 +6,9 @@ import {
   ApolloProvider,
   createHttpLink,
 } from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
+import AuthService from './utils/auth';
 import { Outlet } from 'react-router-dom';
+import { setContext } from '@apollo/client/link/context';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -34,10 +35,13 @@ const client = new ApolloClient({
 });
 
 function App() {
+  const isLoggedIn = AuthService.loggedIn();
+
   return (
     <ApolloProvider client={client}>
       <div className="flex-column justify-flex-start min-100-vh">
-        <NavigationBar/>
+        {/* Only show NavigationBar if user is logged in */}
+        {isLoggedIn && <NavigationBar />}
         <div className="container">
           <Outlet />
         </div>
