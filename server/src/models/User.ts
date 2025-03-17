@@ -1,11 +1,12 @@
 import { Schema, model, Document } from 'mongoose';
 import bcrypt from 'bcrypt';
 
+// Define an interface for the User document
 interface IUser extends Document {
   username: string;
   email: string;
   password: string;
-  role: 'Admin' | 'Manager' | 'Driver'; // Match the roles as in the interface
+  role: 'Admin' | 'Manager' | 'Driver';
   status: 'active' | 'inactive';
   isCorrectPassword(password: string): Promise<boolean>;
 }
@@ -48,19 +49,21 @@ const userSchema = new Schema<IUser>(
   }
 );
 
+// Hash the password before saving the user
 userSchema.pre<IUser>('save', async function (next) {
   if (this.isNew || this.isModified('password')) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
-
   next();
 });
 
+// Method to compare passwords
 userSchema.methods.isCorrectPassword = async function (password: string): Promise<boolean> {
   return bcrypt.compare(password, this.password);
 };
 
+// Create and export the User model
 const User = model<IUser>('User', userSchema);
 
 export default User;
