@@ -5,12 +5,16 @@ import { signToken, AuthenticationError } from '../utils/auth.js'
 
 // Define types for the arguments
 interface AddUserArgs {
-  input:{
-    username: string;
-    email: string;
-    password: string;
-    role: 'Admin' | 'Manager' | 'Driver';
-  }
+    username: string,
+    email: string,
+    password: string,
+    role: string,
+    status: boolean,
+    isCorrectPassword: boolean
+}
+interface UpdateUserStatus{
+  userId: number,
+  status: boolean
 }
 
 interface LoginUserArgs {
@@ -108,6 +112,7 @@ const resolvers = {
     updateItem: async (_parent: unknown, {warehouseId, index, newItem}: {warehouseId: number, index: number, newItem: string}) => {
       return await Warehouse.findOneAndUpdate(
         {_id: warehouseId},
+        //CHECK TO SEE IF THIS IS CORRECT SYNTAX
         {$set: {[`items.${index}`]: newItem}},
         {new: true, runValidators: true}
       )
