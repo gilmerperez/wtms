@@ -2,31 +2,16 @@ import { Link, useLocation } from "react-router-dom";
 import AuthService from "../utils/auth";
 
 const NavigationBar = () => {
-  const location = useLocation(); // Get the current route location
+  const location = useLocation();
   const handleSignOut = () => {
     AuthService.logout();
   };
 
   return (
-<<<<<<< HEAD
     <div style={styles.navbar}>
       {/* Logo Section */}
       <div style={styles.logoSection}>
         <img src="/logo.png" alt="Logo" style={styles.logo} />
-=======
- <>
- <div className="topnav">
-  
-    <div/>
-    <div id="mySidenav" className="sidenav">
-      <a href="javascript:void(0)" className="closebtn" onClick={() => closeNav()}>&times;</a>
-      <a href="/">Dashboard</a>
-      <a href="/usermgt">User Management</a>
-      <a href="/warehouse">Warehouse Management</a>
-      <a href="/fleet">Fleet Management</a>
-    </div>
-    <span onClick={() => openNav()}>open</span>
->>>>>>> d7ac69d3b1a7a85026270a7cc8523de6d80eabec
       </div>
 
       {/* Navigation Links */}
@@ -85,37 +70,37 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#ff8c42", // Orange background
+    backgroundColor: "#ff8c42",
     padding: "10px 20px",
     width: "100%",
     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
   },
   logoSection: {
-    flex: 1, // Takes up space for the logo
+    flex: 1,
   },
   logo: {
     height: "40px",
   },
   links: {
     display: "flex",
-    gap: "20px", // Space between links
+    gap: "20px",
   },
   link: {
-    color: "#000", // Black text
+    color: "#000",
     fontWeight: "bold",
     textDecoration: "none",
     padding: "10px 15px",
     borderRadius: "4px",
-    border: "2px solid transparent", // Transparent border by default
+    border: "2px solid transparent",
     transition: "all 0.3s ease",
   },
   activeLink: {
-    backgroundColor: "#e67e22", // Darker orange for active link
-    border: "2px solid #000", // Black border for active link
+    backgroundColor: "#e67e22",
+    border: "2px solid #000",
   },
   signOutButton: {
-    backgroundColor: "#000", // Black background
-    color: "#ff8c42", // Orange text
+    backgroundColor: "#000",
+    color: "#ff8c42",
     fontWeight: "bold",
     padding: "10px 15px",
     borderRadius: "4px",
