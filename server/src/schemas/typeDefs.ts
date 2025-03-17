@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 
 const typeDefs = gql`
     type User {
-        userId: ID!
+        userId: ObjectId!
         name: String!
         email: String!
         password: String!
@@ -10,7 +10,7 @@ const typeDefs = gql`
         status: Boolean!
     }
     type Warehouse {
-        warehouseId: ID!
+        warehouseId: ObjectId!
         name: String!
         location: String!
         status: Boolean!
@@ -19,7 +19,7 @@ const typeDefs = gql`
         # arrivalDate: Date
     }
     type Truck {
-        truckId: ID!
+        truckId: ObjectId!
         driver: String!
         status: Boolean!
     }
@@ -31,7 +31,7 @@ const typeDefs = gql`
         addTruck(driver: String!, status:Boolean!)
         deleteTruck(truckId: ObjectId)
         deleteWarehouse(warehouseId: ObjectId)
-        updateUserStatus(userId:ID!, status: Boolean!)
+        updateUserStatus(userId:ObjectId!, status: Boolean!)
         # updateWarehouseStatus(warehouseId: ID!, status:Boolean!)
         # updateTruckStatus(truckId:ID!, status: Boolean)
         addItem(warehouseId: ObjectId, index: Int)

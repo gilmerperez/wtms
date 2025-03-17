@@ -112,6 +112,7 @@ const resolvers = {
     updateItem: async (_parent: unknown, {warehouseId, index, newItem}: {warehouseId: number, index: number, newItem: string}) => {
       return await Warehouse.findOneAndUpdate(
         {_id: warehouseId},
+        //CHECK TO SEE IF THIS IS CORRECT SYNTAX
         {$set: {[`items.${index}`]: newItem}},
         {new: true, runValidators: true}
       )
