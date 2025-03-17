@@ -89,15 +89,16 @@ const resolvers = {
       return { token, user }
     },
     addUser: async (_parent: unknown, {username, email, password, role, status, isCorrectPassword}: AddUserArgs) => {
-      const newUser = await new User({ username, email, password, role, status, isCorrectPassword});
+      const newUser = await User.create({ username, email, password, role, status, isCorrectPassword});
+      // User.save()
       return newUser;
     },
     addWarehouse: async (_parent: unknown, { name, location, status, items, quantity }: addWarehouse) => {
-      const newWarehouse = await new Warehouse({name, location, status, items, quantity});
+      const newWarehouse = Warehouse.create({name, location, status, items, quantity});
       return newWarehouse;
     },
     addTruck: async (_parent: unknown, { truckId, truckName, truckCapacity, driverName, status, assignedWarehouse }: AddTruck) => {
-      const newTruck = await new Truck({truckId, truckName, truckCapacity, driverName, status, assignedWarehouse});
+      const newTruck = Truck.create({truckId, truckName, truckCapacity, driverName, status, assignedWarehouse});
 
       return newTruck;
     },
@@ -138,7 +139,7 @@ const resolvers = {
 
     // Query to get the authenticated user's information
     // The 'me' query relies on the context to check if the user is authenticated
-    me: async (_parent: unknown, _args: any, context: any) => {
+    me: async (_parent: unknown, _args: unknown, context: any) => {
       // If the user is authenticated, find and return the user's information along with their thoughts
       if (context.user) {
         return User.findOne({ _id: context.user._id });
