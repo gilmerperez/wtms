@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AuthService from "../utils/auth";
+import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../utils/mutations";
 
@@ -57,6 +58,15 @@ const styles = {
     borderRadius: "4px",
     cursor: "pointer",
   },
+  signupLink: {
+    marginTop: "10px",
+    color: "#ff8c42",
+    textDecoration: "none",
+  },
+  error: {
+    color: "red",
+    marginTop: "10px",
+  },
 };
 
 const Login = () => {
@@ -76,7 +86,8 @@ const Login = () => {
       });
 
       if (data?.login?.token) {
-        AuthService.login(data.login.token);
+        AuthService.login(data.login.token); // Save token and redirect
+        window.location.assign('/landing'); // Redirect to Landing page
       }
     } catch (err) {
       console.error("Login error:", err);
@@ -86,7 +97,7 @@ const Login = () => {
   return (
     <div style={styles.container}>
       <div style={styles.topBar}>
-        <h2>WTMS Logo</h2>
+        <img src="/logo.png" alt="Logo" style={styles.logo} />
       </div>
 
       <div style={styles.loginBox}>
@@ -111,6 +122,9 @@ const Login = () => {
           </button>
         </form>
         {error && <p style={styles.error}>Invalid username or password.</p>}
+        <p style={styles.signupLink}>
+          New user? <Link to="/signup">Sign up here</Link>
+        </p>
       </div>
     </div>
   );
