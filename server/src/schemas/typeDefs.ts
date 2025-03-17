@@ -29,9 +29,11 @@ const typeDefs = gql`
         addUser (name: String!, email: String!, password: String!, role: Role!, status: Status!): User
         addWarehouse (name: String!, location: String!, status: Status!, items: [Item], quantity: Int): Warehouse
         addTruck(driver: String!, status:Boolean!)
+        deleteTruck(truckId: ObjectId)
+        deleteWarehouse(warehouseId: ObjectId)
         updateUserStatus(userId:ID!, status: Boolean!)
-        updateWarehouseStatus(warehouseId: ID!, status:Boolean!)
-        updateTruckStatus(truckId:ID!, status: Boolean)
+        # updateWarehouseStatus(warehouseId: ID!, status:Boolean!)
+        # updateTruckStatus(truckId:ID!, status: Boolean)
         
 
     }

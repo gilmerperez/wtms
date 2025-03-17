@@ -125,14 +125,14 @@ const resolvers = {
     // updateWarehouseStatus: async (_parent: unknown, { warehouseId, status }) => {
     //   return await Warehouse.findByIdAndUpdate(
     //     { _id: warehouseId },
-    //     { $addToSet: status },
+    //     { $addToSet: {status: status} },
     //     { new: true, runValidators: true }
     //   );
     // },
     // updateTruckStatus: async (_parent: unknown, { truckId, status }) => {
     //   return await Truck.findByIdAndUpdate(\
     //     { _id: truckId },
-    //     { $addToSet: status },
+    //     { $addToSet: {status: status} },
     //     { new: true, runValidators: true }
     //   );
     // },
