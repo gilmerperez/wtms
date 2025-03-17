@@ -33,9 +33,9 @@ const inventorySchema = new Schema<IInventory>(
       type: Date,
       required: true,
     },
-    type:{
-        type:String,
-        required:true
+    type: {
+      type: String,
+      required: true
     }
   },
   {
@@ -45,10 +45,6 @@ const inventorySchema = new Schema<IInventory>(
   }
 );
 
-
-
-
-
-const Inventory = model<IInventory>('User', inventorySchema);
+const Inventory = model<IInventory>('Inventory', inventorySchema);
 
 export default Inventory;

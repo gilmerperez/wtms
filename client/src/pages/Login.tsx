@@ -1,7 +1,63 @@
 import React, { useState } from "react";
+import AuthService from "../utils/auth";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../utils/mutations";
-import AuthService from "../utils/auth";
+
+// Styles
+const styles = {
+  container: {
+    display: "flex",
+    flexDirection: "column" as "column",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100vh",
+    backgroundColor: "#f5f5f5",
+  },
+  topBar: {
+    width: "100%",
+    height: "60px",
+    backgroundColor: "#ff8c42",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    position: "fixed" as "fixed",
+    top: 0,
+  },
+  logo: {
+    height: "40px",
+  },
+  loginBox: {
+    backgroundColor: "#fff",
+    padding: "20px",
+    borderRadius: "8px",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+    width: "300px",
+    textAlign: "center" as "center",
+  },
+  loginTitle: {
+    marginBottom: "20px",
+    color: "#333",
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column" as "column",
+  },
+  input: {
+    padding: "10px",
+    marginBottom: "15px",
+    border: "1px solid #ff8c42",
+    borderRadius: "4px",
+    outline: "none",
+  },
+  button: {
+    padding: "10px",
+    backgroundColor: "#ff8c42",
+    color: "#fff",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
+  },
+};
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -20,10 +76,10 @@ const Login = () => {
       });
 
       if (data?.login?.token) {
-        AuthService.login(data.login.token); // Save token and redirect
+        AuthService.login(data.login.token);
       }
     } catch (err) {
-      console.error('Login error:', err);
+      console.error("Login error:", err);
     }
   };
 
@@ -61,59 +117,3 @@ const Login = () => {
 };
 
 export default Login;
-
-// Styles
-const styles = {
-  container: {
-    display: "flex",
-    flexDirection: "column" as "column",
-    alignItems: "center",
-    justifyContent: "center",
-    height: "100vh",
-    backgroundColor: "#f5f5f5",
-  },
-  topBar: {
-    width: "100%",
-    height: "60px",
-    backgroundColor: "#ff8c42", // Orange color
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    position: "fixed" as "fixed",
-    top: 0,
-  },
-  logo: {
-    height: "40px",
-  },
-  loginBox: {
-    backgroundColor: "#fff",
-    padding: "20px",
-    borderRadius: "8px",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-    width: "300px",
-    textAlign: "center" as "center",
-  },
-  loginTitle: {
-    marginBottom: "20px",
-    color: "#333",
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column" as "column",
-  },
-  input: {
-    padding: "10px",
-    marginBottom: "15px",
-    border: "1px solid #ff8c42", // Orange border
-    borderRadius: "4px",
-    outline: "none",
-  },
-  button: {
-    padding: "10px",
-    backgroundColor: "#ff8c42", // Orange background
-    color: "#fff",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-  },
-};
