@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AuthService from "../utils/auth";
+import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { ADD_USER } from "../utils/mutations";
 
@@ -57,6 +58,11 @@ const styles = {
     borderRadius: "4px",
     cursor: "pointer",
   },
+  loginLink: {
+    marginTop: "10px",
+    color: "#ff8c42",
+    textDecoration: "none",
+  },
   error: {
     color: "red",
     marginTop: "10px",
@@ -97,6 +103,7 @@ const Signup = () => {
 
       if (data?.addUser?.token) {
         AuthService.login(data.addUser.token); // Save token and redirect
+        window.location.assign("/landing"); // Redirect to Landing page
       }
     } catch (err) {
       console.error("Signup error:", err);
@@ -106,7 +113,7 @@ const Signup = () => {
   return (
     <div style={styles.container}>
       <div style={styles.topBar}>
-        <h2>WTMS Logo</h2>
+        <img src="/logo.png" alt="Logo" style={styles.logo} />
       </div>
 
       <div style={styles.signupBox}>
@@ -151,6 +158,9 @@ const Signup = () => {
         {error && (
           <p style={styles.error}>Error during signup. Please try again.</p>
         )}
+        <p style={styles.loginLink}>
+          Already have an account? <Link to="/login">Log in here</Link>
+        </p>
       </div>
     </div>
   );
