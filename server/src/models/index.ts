@@ -6,5 +6,4 @@ import Warehouse from './Warehouse.js';
 
 
 
-
-export {User, Truck, Warehouse, Inventory};
+export {User, Truck, Warehouse};
