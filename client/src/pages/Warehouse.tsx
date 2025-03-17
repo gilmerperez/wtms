@@ -1,11 +1,9 @@
 const Warehouse = () => {
+  return (
+    <main>
+      <h1>Warehouse Management</h1>
+    </main>
+  );
+};
 
-    return (
-      <main>
-        <h1>Warehouse</h1>
-      </main>
-    );
-  };
-  
-  export default Warehouse;
-  
+export default Warehouse;
