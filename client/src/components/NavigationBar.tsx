@@ -1,25 +1,44 @@
 import { Link } from "react-router-dom";
+import login from "../utils/login";
+
+
+/* Set the width of the side navigation to 250px */
+function openNav() {
+  const sidenav = document.getElementById("mySidenav");
+  if (sidenav) {
+    sidenav.style.width = "250px";
+  }
+}
+  const sidenav = document.getElementById("mySidenav");
+  if (sidenav) {
+    sidenav.style.width = "0";
+  }
+/* Set the width of the side navigation to 0 */
+function closeNav() {
+  const sidenav = document.getElementById("mySidenav");
+  if (sidenav) {
+    sidenav.style.width = "0";
+  }
+}
+
 
 const  NavigationBar = () => {
   return (
-    <ul className="nav nav-tabs" style={{display: "flex", listStyle: "none"}}>
-      <li className="nav-item" style={{padding: '0 10px'}}>
-        <Link to="/">
-          <h1 className="m-0">Home</h1>
-        </Link>
-      </li>
-      <li className="nav-item" style={{padding: '0 10px'}}>
-      <Link  to="/login">
-          <h1 className="m-0">Login</h1>
-        </Link>
-      </li>
-      <li className="nav-item" style={{padding: '0 10px'}}>
-      <Link  to="/signup">
-          <h1 className="m-0">Sign Up</h1>
-        </Link>
-      </li>
-    </ul>
-  );
+ <>
+ <div className="topnav">
+  
+    <div/>
+    <div id="mySidenav" className="sidenav">
+      <a href="javascript:void(0)" className="closebtn" onClick={() => closeNav()}>&times;</a>
+      <a href="/">Dashboard</a>
+      <a href="/UserMgt">User Management</a>
+      <a href="/Warehouse">Warehouse Management</a>
+      <a href="/Fleet">Fleet Management</a>
+    </div>
+    <span onClick={() => openNav()}>open</span>
+      </div>
+    </>
+);
 }
 
 export default NavigationBar;
