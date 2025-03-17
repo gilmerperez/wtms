@@ -113,7 +113,7 @@ const Signup = () => {
   return (
     <div style={styles.container}>
       <div style={styles.topBar}>
-        <img src="/logo.png" alt="Logo" style={styles.logo} />
+        <img src="assets\logos\logo_noBg.png" alt="WTMS Logo" style={styles.logo} />
       </div>
 
       <div style={styles.signupBox}>

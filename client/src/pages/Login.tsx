@@ -70,7 +70,7 @@ const styles = {
 };
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState(""); // Change username to email
   const [password, setPassword] = useState("");
   const [loginUser, { error }] = useMutation<
     { login: { token: string } },
@@ -82,12 +82,12 @@ const Login = () => {
 
     try {
       const { data } = await loginUser({
-        variables: { email: username, password },
+        variables: { email, password }, // Use email directly
       });
 
       if (data?.login?.token) {
-        AuthService.login(data.login.token); // Save token and redirect
-        window.location.assign('/landing'); // Redirect to Landing page
+        AuthService.login(data.login.token);
+        window.location.assign('/landing');
       }
     } catch (err) {
       console.error("Login error:", err);
@@ -97,17 +97,17 @@ const Login = () => {
   return (
     <div style={styles.container}>
       <div style={styles.topBar}>
-        <img src="/logo.png" alt="Logo" style={styles.logo} />
+        <img src="assets\logos\logo_noBg.png" alt="WTMS Logo" style={styles.logo} />
       </div>
 
       <div style={styles.loginBox}>
         <h1 style={styles.loginTitle}>Login</h1>
         <form style={styles.form} onSubmit={handleSubmit}>
           <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            type="email" // Change to email input
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             style={styles.input}
           />
           <input
@@ -121,7 +121,7 @@ const Login = () => {
             Login
           </button>
         </form>
-        {error && <p style={styles.error}>Invalid username or password.</p>}
+        {error && <p style={styles.error}>Invalid email or password.</p>}
         <p style={styles.signupLink}>
           New user? <Link to="/signup">Sign up here</Link>
         </p>
