@@ -1,4 +1,5 @@
 import './App.css';
+import './styles/pages.css';
 import NavigationBar from './components/NavigationBar.tsx'
 import {
   ApolloClient,
