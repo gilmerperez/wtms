@@ -31,7 +31,7 @@ const userSchema = new Schema<IUser>(
     },
     role: {
       type: String,
-      enum: ['Admin', 'Manager', 'Driver'], 
+      enum: ['Admin', 'Manager', 'Driver'],
       required: true,
       default: 'Admin',
     },
@@ -53,7 +53,6 @@ userSchema.pre<IUser>('save', async function (next) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
-
   next();
 });
 
@@ -64,5 +63,3 @@ userSchema.methods.isCorrectPassword = async function (password: string): Promis
 const User = model<IUser>('User', userSchema);
 
 export default User;
-
-

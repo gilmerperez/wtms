@@ -5,16 +5,12 @@ import { signToken, AuthenticationError } from '../utils/auth.js'
 
 // Define types for the arguments
 interface AddUserArgs {
-    username: string,
-    email: string,
-    password: string,
-    role: [string],
-    status: boolean,
-    isCorrectPassword: boolean
-}
-interface UpdateUserStatus{
-  userId: number,
-  status: boolean
+  input:{
+    username: string;
+    email: string;
+    password: string;
+    role: 'Admin' | 'Manager' | 'Driver';
+  }
 }
 
 interface LoginUserArgs {
