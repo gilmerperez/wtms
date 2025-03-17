@@ -1,4 +1,4 @@
-import { User } from '../models/index.js';
+import User  from '../models/User.js';
 import process from 'process';
 
 const cleanDB = async (): Promise<void> => {
