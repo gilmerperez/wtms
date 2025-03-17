@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import AuthService from "../utils/auth";
-import { useState, useEffect, } from "react";
+import { useState, useEffect } from "react";
 
 const Landing = () => {
   const [user, setUser] = useState<{ username: string } | null>(null);
@@ -20,13 +20,6 @@ const Landing = () => {
         <>
           <p>Welcome, {user?.username}!</p>
           <p>You are now logged in.</p>
-          <div>
-            <Link to="/user-mgt">Go to User Management</Link>
-            <br />
-            <Link to="/warehouse">Go to Warehouse Management</Link>
-            <br />
-            <Link to="/fleet">Go to Fleet Management</Link>
-          </div>
         </>
       ) : (
         <>
