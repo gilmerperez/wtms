@@ -1,5 +1,7 @@
-import { User } from '../models/index.js';
-import { signToken, AuthenticationError } from '../utils/auth.js'; 
+import User from "../models/User.js"
+import Warehouse from "../models/Warehouse.js"
+import Truck from "../models/Truck.js"
+import { signToken, AuthenticationError } from '../utils/auth.js'
 
 // Define types for the arguments
 interface AddUserArgs {
@@ -79,7 +81,7 @@ const resolvers = {
         throw new AuthenticationError('Invalid Password')
       }
       //REFER TO LINE 31
-      const token = signToken(user.email, user.password)
+      const token = signToken(user.email, user.password, user.role, user.status)
       return { token, user }
     },
     addUser: async (_parent: unknown, {username, email, password, role, status, isCorrectPassword}: AddUserArgs) => {
