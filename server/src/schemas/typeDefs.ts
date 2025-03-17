@@ -34,6 +34,10 @@ const typeDefs = gql`
         updateUserStatus(userId:ID!, status: Boolean!)
         # updateWarehouseStatus(warehouseId: ID!, status:Boolean!)
         # updateTruckStatus(truckId:ID!, status: Boolean)
+        addItem(warehouseId: ObjectId, index: Int)
+        updateItem(warehouseId: ObjectId, index: Int, newItem: String)
+        deleteItem(warehouseId: ObjectId, item: string)
+
         
 
     }
