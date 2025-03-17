@@ -31,9 +31,9 @@ const  NavigationBar = () => {
     <div id="mySidenav" className="sidenav">
       <a href="javascript:void(0)" className="closebtn" onClick={() => closeNav()}>&times;</a>
       <a href="/">Dashboard</a>
-      <a href="/UserMgt">User Management</a>
-      <a href="/Warehouse">Warehouse Management</a>
-      <a href="/Fleet">Fleet Management</a>
+      <a href="/usermgt">User Management</a>
+      <a href="/warehouse">Warehouse Management</a>
+      <a href="/fleet">Fleet Management</a>
     </div>
     <span onClick={() => openNav()}>open</span>
       </div>
