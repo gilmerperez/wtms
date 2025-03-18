@@ -6,7 +6,6 @@ import { signToken, AuthenticationError } from '../utils/auth.js'
 // Define types for the arguments
 
 interface User{
-  userId: string,
   username: string,
   email: string,
   password: string,
@@ -55,7 +54,7 @@ interface LoginUserArgs {
 }
 
 interface UserArgs {
-  userId: string
+  username: string
 }
 interface WarehouseArgs {
   warehouseId: string
@@ -86,8 +85,8 @@ const resolvers = {
     getUsers: async () => {
       return await User.find()
     },
-    getUser: async (_parent: any, { userId }: UserArgs) => {
-      return await User.findById(userId);
+    getUser: async (_parent: any, { username }: UserArgs) => {
+      return await User.findById(username);
     },
     getWarehouses: async () => {
       return await Warehouse.find()
@@ -131,8 +130,8 @@ const resolvers = {
       // User.save()
       return newUser;
     },
-    addWarehouse: async (_parent: any, { name, location, status, items }: addWarehouse) => {
-      const newWarehouse = Warehouse.create({ name, location, status, items});
+    addWarehouse: async (_parent: any, { name, location, capacity, items }: addWarehouse) => {
+      const newWarehouse = Warehouse.create({ name, location, capacity, items});
       return newWarehouse;
     },
     addTruck: async (_parent: any, { truckId, truckName, truckCapacity, driverName, status, assignedWarehouse }: AddTruck) => {
