@@ -15,7 +15,7 @@ const typeDefs = gql`
         location: String!
         status: Boolean!
         items: [Item]
-        quantity: Int
+        capacity: Int
         # arrivalDate: Date
     }
     type Truck {
@@ -40,11 +40,11 @@ const typeDefs = gql`
         deleteTruck(truckId: String!)
         deleteWarehouse(warehouseId: String!)
         updateUserStatus(userId:String!, status: Boolean!)
-        updateWarehouseCapacity(warehouseId: String!)
+        updateWarehouseCapacity(warehouseId: String!, capacity: Int)
         # updateTruckStatus(truckId: ID!, status: Boolean)
         addItem(warehouseId: String!, index: Int)
         updateItem(warehouseId: String!, index: Int, newItem: String)
-        deleteItem(warehouseId: String!, item: string)
+        deleteItem(warehouseId: String!, item: String)
 
         
 
