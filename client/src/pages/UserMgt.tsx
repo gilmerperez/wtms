@@ -12,7 +12,7 @@ interface User {
   status: string;
 }
 
-interface NewUser {
+interface UserInput {
   username: string;
   email: string;
   password: string;
@@ -21,7 +21,7 @@ interface NewUser {
 
 const UserMgt = () => {
   const [users, setUsers] = useState<User[]>([]);
-  const [newUser, setNewUser] = useState<NewUser>({
+  const [newUser, setNewUser] = useState<UserInput>({
     username: "",
     email: "",
     password: "",
@@ -40,16 +40,25 @@ const UserMgt = () => {
   // Add user mutation
   const [addUser] = useMutation(ADD_USER, {
     refetchQueries: [{ query: QUERY_USERS }],
+    onError: (err) => {
+      alert(`Error adding user: ${err.message}`);
+    },
   });
 
   // Update user mutation
   const [updateUser] = useMutation(UPDATE_USER, {
     refetchQueries: [{ query: QUERY_USERS }],
+    onError: (err) => {
+      alert(`Error updating user: ${err.message}`);
+    },
   });
 
   // Deactivate user mutation
   const [deactivateUser] = useMutation(DEACTIVATE_USER, {
     refetchQueries: [{ query: QUERY_USERS }],
+    onError: (err) => {
+      alert(`Error deactivating user: ${err.message}`);
+    },
   });
 
   // Adding a new user
@@ -160,12 +169,16 @@ const UserMgt = () => {
                   <button
                     onClick={() => setEditUser(user)}
                     className="editButton"
+                    aria-label={`Edit user ${user.username}`}
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => handleDeactivateUser(user._id)}
                     className="deactivateButton"
+                    aria-label={`${
+                      user.status === "active" ? "Deactivate" : "Activate"
+                    } user ${user.username}`}
                   >
                     {user.status === "active" ? "Deactivate" : "Activate"}
                   </button>
