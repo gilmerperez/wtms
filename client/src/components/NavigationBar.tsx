@@ -8,25 +8,10 @@ const NavigationBar = () => {
   };
 
   return (
-<<<<<<< HEAD
     <div style={styles.navbar}>
       {/* Logo Section */}
       <div style={styles.logoSection}>
         <img src="/logo.png" alt="Logo" style={styles.logo} />
-=======
- <>
- <div className="topnav">
-  
-    <div/>
-    <div id="mySidenav" className="sidenav">
-      <a href="javascript:void(0)" className="closebtn" onClick={() => closeNav()}>&times;</a>
-      <a href="/">Dashboard</a>
-      <a href="/usermgt">User Management</a>
-      <a href="/warehouse">Warehouse Management</a>
-      <a href="/fleet">Fleet Management</a>
-    </div>
-    <span onClick={() => openNav()}>open</span>
->>>>>>> d7ac69d3b1a7a85026270a7cc8523de6d80eabec
       </div>
 
       {/* Navigation Links */}
