@@ -171,7 +171,7 @@ const resolvers = {
       )
 
     },
-    // deleteUser: async (_parent: unknown, {userId}) => {
+    // deleteUser: async (_parent: any, {userId}) => {
     //     return await User.findByIdAndDelete(userId);
     // },
     //WE NEED TO DELETE SOMETHING TO FULFILL THE PROJECT'S CRITERIA
@@ -189,7 +189,7 @@ const resolvers = {
         { new: true, runValidators: true }
       );
     },
-    // updateTruckStatus: async (_parent: unknown, { truckId, status }) => {
+    // updateTruckStatus: async (_parent: any, { truckId, status }) => {
     //   return await Truck.findByIdAndUpdate(\
     //     { _id: truckId },
     //     { $addToSet: {status: status} },
