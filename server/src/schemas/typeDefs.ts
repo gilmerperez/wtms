@@ -13,7 +13,6 @@ const typeDefs = gql`
         warehouseId: String!
         name: String!
         location: String!
-        items: [Item]!
     }
     type Truck {
         truckId: String!
@@ -38,8 +37,8 @@ const typeDefs = gql`
         quantity: Int!
         arrivalDate: String!
     }
-
-
+    
+    
     type Query {
         getUsers: [User]!
         getUser(userId: ID): User
@@ -48,6 +47,10 @@ const typeDefs = gql`
         getTrucks: [Truck]
         getTruck(truckId: ID): Truck
         me: User
+    }
+    type Auth {
+        token: ID! 
+        user: User
     }
     type Mutation {
         login(email: String!, password: String!): Auth
@@ -62,6 +65,7 @@ const typeDefs = gql`
         addItem(warehouseId: String!, index: Int): String
         updateItem(warehouseId: String!, index: Int, newItem: String): String
         deleteItem(warehouseId: String!, item: String): String
+
 
         
 

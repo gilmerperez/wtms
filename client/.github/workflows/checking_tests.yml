@@ -1,78 +1,117 @@
-# Name of workflow
-name: Lint, Build, and Test Workflow
+# # Name of workflow
+# name: Lint, Build, and Test Workflow
 
-# Trigger workflow on all pull requests to the develop branch
+# # Trigger workflow on all pull requests to the develop branch
+# on:
+#   pull_request:
+#     branches:
+#       - develop
+
+# # Jobs to carry out
+# jobs:
+#   # Linting job
+#   lint:
+#     runs-on: ubuntu-latest
+#     steps:
+#       # Checkout code
+#       - name: Checkout code
+#         uses: actions/checkout@v3
+
+#       # Set up Node.js
+#       - name: Use Node.js 21.x
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: 21.x
+
+#       # Install dependencies
+#       - name: Install Dependencies
+#         run: npm install
+
+#       # Run linting
+#       - name: Run Lint
+#         run: npm run lint
+
+#   # Building job
+#   build:
+#     runs-on: ubuntu-latest
+#     needs: lint # Cannot continue without the lint job
+#     steps:
+#       # Checkout code
+#       - name: Checkout code
+#         uses: actions/checkout@v3
+
+#       # Set up Node.js
+#       - name: Use Node.js 21.x
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: 21.x
+
+#       # Install dependencies
+#       - name: Install Dependencies
+#         run: npm install
+
+#       # Run build
+#       - name: Run Build
+#         run: npm run build
+
+#   # Testing job
+#   test:
+#     runs-on: ubuntu-latest
+#     needs: build # Cannot continue without the build job
+#     steps:
+#       # Checkout code
+#       - name: Checkout code
+#         uses: actions/checkout@v3
+
+#       # Set up Node.js
+#       - name: Use Node.js 21.x
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: 21.x
+
+#       # Install dependencies
+#       - name: Install Dependencies
+#         run: npm install
+
+#       # Run tests
+#       - name: Run Tests
+#         run: npm run test
+
+
+name: Checking Tests
+
 on:
-  pull_request:
+   pull_request:
     branches:
       - develop
+      - feature/test-action
 
-# Jobs to carry out
 jobs:
-  # Linting job
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      # Checkout code
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      # Set up Node.js
-      - name: Use Node.js 21.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 21.x
-
-      # Install dependencies
-      - name: Install Dependencies
-        run: npm install
-
-      # Run linting
-      - name: Run Lint
-        run: npm run lint
-
-  # Building job
-  build:
-    runs-on: ubuntu-latest
-    needs: lint # Cannot continue without the lint job
-    steps:
-      # Checkout code
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      # Set up Node.js
-      - name: Use Node.js 21.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 21.x
-
-      # Install dependencies
-      - name: Install Dependencies
-        run: npm install
-
-      # Run build
-      - name: Run Build
-        run: npm run build
-
-  # Testing job
   test:
+    name: Checking Tests
     runs-on: ubuntu-latest
-    needs: build # Cannot continue without the build job
-    steps:
-      # Checkout code
-      - name: Checkout code
-        uses: actions/checkout@v3
 
-      # Set up Node.js
-      - name: Use Node.js 21.x
-        uses: actions/setup-node@v3
+    steps:
+    
+      - name: Checkout code
+        uses: actions/checkout@v4
+    
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 21.x
-
-      # Install dependencies
-      - name: Install Dependencies
+     
+      - name: Install dependencies
         run: npm install
+     
+      - name: Build App
+        run: npm run build
+     
+      - name: Cypress component testing
+        uses: cypress-io/github-action@v6
+        with:
+          component: true
+     
+      - name: Run vitest component tests
+        run: npm run test-component
 
-      # Run tests
-      - name: Run Tests
-        run: npm run test
