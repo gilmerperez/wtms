@@ -1,4 +1,4 @@
-import '../styles/Login.css'
+import "../styles/Login.css";
 import React, { useState } from "react";
 import AuthService from "../utils/auth";
 import { Link } from "react-router-dom";
@@ -31,34 +31,38 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-top-bar">
-        <img src="assets/logos/logo_noBg.png" alt="WTMS Logo" className="login-logo" />
+    <div className="container">
+      <div className="topBar">
+        <img
+          src="assets/logos/logo_noBg.png"
+          alt="WTMS Logo"
+          className="logo"
+        />
       </div>
 
-      <div className="login-box">
-        <h1 className="login-title">Login</h1>
-        <form className="login-form" onSubmit={handleSubmit}>
+      <div className="loginBox">
+        <h1 className="loginTitle">Login</h1>
+        <form className="form" onSubmit={handleSubmit}>
           <input
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="login-input"
+            className="input"
           />
           <input
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="login-input"
+            className="input"
           />
-          <button type="submit" className="login-button">
+          <button type="submit" className="button">
             Login
           </button>
         </form>
-        {error && <p className="login-error">Invalid email or password.</p>}
-        <p className="signup-link">
+        {error && <p className="error">Invalid email or password.</p>}
+        <p className="signupLink">
           New user? <Link to="/signup">Sign up here</Link>
         </p>
       </div>
