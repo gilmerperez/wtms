@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 
 const typeDefs = gql`
     type User {
-        userId: String!
+        _id: ID
         username: String!
         email: String!
         password: String!
@@ -10,9 +10,11 @@ const typeDefs = gql`
         status: String!
     }
     type Warehouse {
-        warehouseId: String!
+        _id: ID
         name: String!
         location: String!
+        capacity: Int!
+        items: [Item]!
     }
     type Truck {
         truckId: String!
