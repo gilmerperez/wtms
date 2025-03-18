@@ -1,6 +1,6 @@
 import { Schema } from 'mongoose';
 interface Game {
-  _id: Schema.Types.ID;
+  _id: Schema.Types.ObjectId;
   maskedWord: string;
   guesses: string[];
   isCorrect: boolean;
