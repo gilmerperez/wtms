@@ -1,5 +1,29 @@
 import "./UserMgt.css";
 
+interface User {
+  _id: string;
+  username: string;
+  email: string;
+  role: string;
+  status: string;
+}
+
+interface NewUser {
+  username: string;
+  email: string;
+  password: string;
+  role: string;
+}
+
+const [users, setUsers] = useState<User[]>([]);
+const [newUser, setNewUser] = useState<NewUser>({
+  username: "",
+  email: "",
+  password: "",
+  role: "Driver",
+});
+const [editUser, setEditUser] = useState<User | null>(null);
+
 const handleAddUser = async (e) => {
   e.preventDefault();
   if (!newUser.username || !newUser.email || !newUser.password) {
