@@ -26,7 +26,7 @@ const typeDefs = gql`
 
     type Mutation {
         login (email: String!, password: String!)
-        addUser (name: String!, email: String!, password: String!, role: Role!, status: Status!): User
+        addUser(username: String, email: String, password: String, role: String, status: Boolean, isCorrectPassword: Boolean): User
         addWarehouse (name: String!, location: String!, status: Status!, items: [Item], quantity: Int): Warehouse
         addTruck(driver: String!, status:Boolean!)
         deleteTruck(truckId: ObjectId)
