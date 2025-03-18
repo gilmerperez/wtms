@@ -1,80 +1,92 @@
-import { User } from '../models/index.js';
-import { signToken, AuthenticationError } from '../utils/auth.js';
-
-// Define types for the arguments
-interface AddUserArgs {
-  input: {
-    username: string;
-    email: string;
-    password: string;
-    role: 'Admin' | 'Manager' | 'Driver';
-  }
-}
-
-interface LoginUserArgs {
-  email: string;
-  password: string;
-}
-
-interface UserArgs {
-  username: string;
-}
+import User from "../models/User.js";
+import Truck from "../models/Truck.js";
+import Warehouse from "../models/Warehouse.js";
+import { signToken, AuthenticationError } from "../utils/auth.js";
 
 const resolvers = {
   Query: {
-    users: async () => {
-      return User.find();
+    getUser: async (_parent: unknown, { userId }: { userId: string }) => {
+      return await User.findById(userId);
     },
-    user: async (_parent: any, { username }: UserArgs) => {
-      return User.findOne({ username });
+    getUsers: async () => {
+      return await User.find();
     },
-
-    // Query to get the authenticated user's information
-    // The 'me' query relies on the context to check if the user is authenticated
-    me: async (_parent: any, _args: any, context: any) => {
-      // If the user is authenticated, find and return the user's information along with their thoughts
+    me: async (_parent: unknown, _args: unknown, context: any) => {
       if (context.user) {
         return User.findOne({ _id: context.user._id });
       }
-      // If the user is not authenticated, throw an AuthenticationError
-      throw new AuthenticationError('Could not authenticate user.');
+      throw new AuthenticationError("Could not authenticate user.");
+    },
+    getTruck: async (_parent: unknown, { truckId }: { truckId: string }) => {
+      return await Truck.findById(truckId);
+    },
+    getTrucks: async () => {
+      return await Truck.find();
+    },
+    getWarehouse: async (_parent: unknown, { warehouseId }: { warehouseId: string }) => {
+      return await Warehouse.findById(warehouseId);
+    },
+    getWarehouses: async () => {
+      return await Warehouse.find();
     },
   },
   Mutation: {
-    addUser: async (_parent: any, { input }: AddUserArgs) => {
-      // Create a new user with the provided username, email, and password
-      const user = await User.create({ ...input });
-
-      // Sign a token with the user's information
-      const token = signToken(user.username, user.email, user._id, user.role);
-
-      // Return the token and the user
+    login: async (_parent: unknown, { email, password }: { email: string; password: string }) => {
+      const user = await User.findOne({ email });
+      if (!user) {
+        throw new AuthenticationError("Invalid email or password.");
+      }
+      const correctPw = await user.isCorrectPassword(password);
+      if (!correctPw) {
+        throw new AuthenticationError("Invalid email or password.");
+      }
+      const token = signToken(user.email, user.username, user.role, user._id);
       return { token, user };
     },
-
-    login: async (_parent: any, { email, password }: LoginUserArgs) => {
-      // Find a user with the provided email
-      const user = await User.findOne({ email });
-
-      // If no user is found, throw an AuthenticationError
-      if (!user) {
-        throw new AuthenticationError('Could not authenticate user.');
-      }
-
-      // Check if the provided password is correct
-      const correctPw = await user.isCorrectPassword(password);
-
-      // If the password is incorrect, throw an AuthenticationError
-      if (!correctPw) {
-        throw new AuthenticationError('Could not authenticate user.');
-      }
-
-      // Sign a token with the user's information
-      const token = signToken(user.username, user.email, user._id, user.role);
-
-      // Return the token and the user
+    addUser: async (_parent: unknown, { username, email, password, role }: { username: string; email: string; password: string; role: string }) => {
+      const user = await User.create({ username, email, password, role });
+      const token = signToken(user.email, user.username, user.role, user._id);
       return { token, user };
-    }
+    },
+    addWarehouse: async (_parent: unknown, { name, location, status, capacity }: { name: string; location: string; status: string; capacity: number }) => {
+      return await Warehouse.create({ name, location, status, capacity });
+    },
+    addTruck: async (_parent: unknown, { truckName, truckCapacity, driverName, status }: { truckName: string; truckCapacity: number; driverName: string; status: string }) => {
+      return await Truck.create({ truckName, truckCapacity, driverName, status });
+    },
+    deleteTruck: async (_parent: unknown, { truckId }: { truckId: string }) => {
+      return await Truck.findByIdAndDelete(truckId);
+    },
+    deleteWarehouse: async (_parent: unknown, { warehouseId }: { warehouseId: string }) => {
+      return await Warehouse.findByIdAndDelete(warehouseId);
+    },
+    updateUserStatus: async (_parent: unknown, { userId, status }: { userId: string; status: string }) => {
+      return await User.findByIdAndUpdate(userId, { $set: { status } }, { new: true });
+    },
+    updateWarehouseCapacity: async (_parent: unknown, { warehouseId, capacity }: { warehouseId: string; capacity: number }) => {
+      return await Warehouse.findByIdAndUpdate(warehouseId, { $set: { capacity } }, { new: true });
+    },
+    addItem: async (_parent: unknown, { warehouseId, itemName, quantity, arrivalDate }: { warehouseId: string; itemName: string; quantity: number; arrivalDate: string }) => {
+      return await Warehouse.findByIdAndUpdate(
+        warehouseId,
+        { $push: { items: { itemName, quantity, arrivalDate } } },
+        { new: true }
+      );
+    },
+    updateItem: async (_parent: unknown, { warehouseId, index, newItem }: { warehouseId: string; index: number; newItem: string }) => {
+      return await Warehouse.findOneAndUpdate(
+        { _id: warehouseId },
+        { $set: { [`items.${index}.itemName`]: newItem } },
+        { new: true }
+      );
+    },
+    deleteItem: async (_parent: unknown, { warehouseId, itemName }: { warehouseId: string; itemName: string }) => {
+      return await Warehouse.findByIdAndUpdate(
+        warehouseId,
+        { $pull: { items: { itemName } } },
+        { new: true }
+      );
+    },
   },
 };
 
