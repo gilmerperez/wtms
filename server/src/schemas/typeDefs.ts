@@ -13,38 +13,49 @@ const typeDefs = gql`
         warehouseId: String!
         name: String!
         location: String!
-        status: Boolean!
         items: [Item]
+    }
+    type Item {
+        items: String
         quantity: Int
-        # arrivalDate: Date
+        arrivalDate: String
+    }
+    input ItemInput {
+        items: String
+        quantity: Int
+        arrivalDate: String
     }
     type Truck {
         truckId: String!
         driver: String!
         status: Boolean!
     }
-    type Query{
+    type Query {
         getUsers: [User]!
         getUser(userId: ID): User
         getWarehouses: [Warehouse]!
-        getWarehouse:(warehouseId: ID): Warehouse
+        getWarehouse(warehouseId: ID): Warehouse
         getTrucks: [Truck]
         getTruck(truckId: ID): Truck
         me: User
     }
+    type Auth {
+        token: ID! 
+        user: User
+    }
     type Mutation {
-        login (email: String!, password: String!)
-        addUser(username: String, email: String, password: String, role: String, status: Boolean, isCorrectPassword: Boolean): User
-        addWarehouse (name: String!, location: String!, status: Status!, items: [Item], quantity: Int): Warehouse
-        addTruck(driver: String!, status:Boolean!)
-        deleteTruck(truckId: String!)
-        deleteWarehouse(warehouseId: String!)
-        updateUserStatus(userId:String!, status: Boolean!)
-        updateWarehouseCapacity(warehouseId: String!)
+       login(email: String!, password: String!): Auth
+        addUser(username: String, email: String, password: String, role: String, status: Boolean, isCorrectPassword: Boolean): Auth
+        addWarehouse(name: String!, location: String!, items: [ItemInput], quantity: Int): Warehouse
+        addTruck(driver: String!, status:Boolean!): Truck
+        deleteTruck(truckId: String!): Truck
+        deleteWarehouse(warehouseId: String!): Warehouse
+        updateUserStatus(userId:String!, status: Boolean!): Auth
+        updateWarehouseCapacity(warehouseId: String!): Warehouse
         # updateTruckStatus(truckId: ID!, status: Boolean)
-        addItem(warehouseId: String!, index: Int)
-        updateItem(warehouseId: String!, index: Int, newItem: String)
-        deleteItem(warehouseId: String!, item: string)
+        addItem(warehouseId: String!, index: Int): Warehouse
+        updateItem(warehouseId: String!, index: Int, newItem: String): Warehouse
+        deleteItem(warehouseId: String!, item: String): Warehouse
 
         
 
