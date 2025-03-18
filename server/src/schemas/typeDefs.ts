@@ -3,27 +3,60 @@ import gql from 'graphql-tag';
 const typeDefs = gql`
     type User {
         userId: String!
-        name: String!
+        username: String!
         email: String!
         password: String!
         role: String!
-        status: Boolean!
+        status: String!
     }
     type Warehouse {
         warehouseId: String!
         name: String!
         location: String!
-        status: Boolean!
+<<<<<<<<< Temporary merge branch 1
+        items: [Item]!
+=========
         items: [Item]
+    }
+    type Item {
+        items: String
         quantity: Int
-        # arrivalDate: Date
+        arrivalDate: String
+    }
+    input ItemInput {
+        items: String
+        quantity: Int
+        arrivalDate: String
+>>>>>>>>> Temporary merge branch 2
     }
     type Truck {
         truckId: String!
-        driver: String!
-        status: Boolean!
+        truckName: String!
+        truckCapacity: Int!
+        driverName: String!
+        status: String!
+        assignedWarehouse: String!
     }
-    type Query{
+<<<<<<<<< Temporary merge branch 1
+    type Auth {
+        token: ID!
+        user: User!
+    }
+    type Item {
+        itemName: String!
+        quantity: Int!
+        arrivalDate: String!
+    }
+    input ItemInput {
+        itemName: String!
+        quantity: Int!
+        arrivalDate: String!
+    }
+
+
+=========
+>>>>>>>>> Temporary merge branch 2
+    type Query {
         getUsers: [User]!
         getUser(userId: ID): User
         getWarehouses: [Warehouse]!
@@ -37,18 +70,19 @@ const typeDefs = gql`
         user: User
     }
     type Mutation {
-        login (email: String!, password: String!)
+        login(email: String!, password: String!): Auth
         addUser(username: String, email: String, password: String, role: String, status: Boolean, isCorrectPassword: Boolean): User
-        addWarehouse (name: String!, location: String!, status: Status!, items: [Item], quantity: Int): Warehouse
-        addTruck(driver: String!, status:Boolean!)
-        deleteTruck(truckId: String!)
-        deleteWarehouse(warehouseId: String!)
-        updateUserStatus(userId:String!, status: Boolean!)
-        updateWarehouseCapacity(warehouseId: String!)
+        addWarehouse (name: String!, location: String!, items: [ItemInput], quantity: Int): Warehouse
+        addTruck(truckName: String, truckCapacity: Int!, driverName: String!, status: String!): Truck
+        deleteTruck(truckId: String!): Truck
+        deleteWarehouse(warehouseId: String!): Warehouse
+        updateUserStatus(userId:String!, status: Boolean!): User
+        updateWarehouseCapacity(warehouseId: String!): Warehouse
         # updateTruckStatus(truckId: ID!, status: Boolean)
-        addItem(warehouseId: String!, index: Int)
-        updateItem(warehouseId: String!, index: Int, newItem: String)
-        deleteItem(warehouseId: String!, item: string)
+        addItem(warehouseId: String!, index: Int): String
+        updateItem(warehouseId: String!, index: Int, newItem: String): String
+        deleteItem(warehouseId: String!, item: String): String
+
 
         
 
