@@ -176,7 +176,9 @@ const UserMgt = () => {
                   <button
                     onClick={() => handleDeactivateUser(user._id)}
                     className="deactivateButton"
-                    aria-label={`${user.status === "active" ? "Deactivate" : "Activate"} user ${user.username}`}
+                    aria-label={`${
+                      user.status === "active" ? "Deactivate" : "Activate"
+                    } user ${user.username}`}
                   >
                     {user.status === "active" ? "Deactivate" : "Activate"}
                   </button>

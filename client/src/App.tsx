@@ -1,6 +1,5 @@
 import "./App.css";
 import "./styles/pages.css";
-import NavigationBar from "./components/NavigationBar.tsx";
 import {
   ApolloClient,
   InMemoryCache,
@@ -10,6 +9,7 @@ import {
 import AuthService from "./utils/auth";
 import { Outlet } from "react-router-dom";
 import { setContext } from "@apollo/client/link/context";
+import NavigationBar from "./components/NavigationBar.tsx";
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({

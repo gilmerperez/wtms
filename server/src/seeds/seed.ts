@@ -11,7 +11,6 @@ const seedDatabase = async (): Promise<void> => {
   try {
     await db();
     await cleanDB();
-
     await User.create(userData);
     await Truck.create(truckData);
     await Warehouse.create(warehouseData);;
