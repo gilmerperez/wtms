@@ -21,7 +21,7 @@ export const authenticateToken = ({ req }: any) => {
   try {
     const { data }: any = jwt.verify(token, process.env.JWT_SECRET_KEY || '', { maxAge: '2hr' });
     // If the token is valid, attach the user data to the request object
-    req.user = data;
+    req.user = { userId: data.userId, role: data.role };
   } catch (err) {
     // If the token is invalid, log an error message
     console.log('Invalid token');
@@ -31,9 +31,9 @@ export const authenticateToken = ({ req }: any) => {
   return req;
 };
 
-export const signToken = (username: string, email: string, _id: unknown, role: string) => {
-  // Create a payload with the user information
-  const payload = { username, email, _id, role };
+export const signToken = (userId: string, role: string) => {
+  // Create a payload with the minimal user information
+  const payload = { userId, role };
   const secretKey: any = process.env.JWT_SECRET_KEY; // Get the secret key from environment variables
 
   // Sign the token with the payload and secret key, and set it to expire in 2 hours

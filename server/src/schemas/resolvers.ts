@@ -1,80 +1,159 @@
-import { User } from '../models/index.js';
+import User from "../models/User.js";
+import Truck from "../models/Truck.js";
+import Warehouse from "../models/Warehouse.js";
 import { signToken, AuthenticationError } from '../utils/auth.js';
 
-// Define types for the arguments
-interface AddUserArgs {
-  input: {
-    username: string;
-    email: string;
-    password: string;
-    role: 'Admin' | 'Manager' | 'Driver';
-  }
-}
-
-interface LoginUserArgs {
+// Define types for arguments
+interface LoginArgs {
   email: string;
   password: string;
 }
 
-interface UserArgs {
+interface AddUserArgs {
   username: string;
+  email: string;
+  password: string;
+  role: string;
+  status: string;
+}
+
+interface UpdateUserStatusArgs {
+  userId: string;
+  status: string;
+}
+
+interface AddTruckArgs {
+  truckId: string;
+  truckName: string;
+  truckCapacity: number;
+  driverName: string;
+  status: string;
+  assignedWarehouse: string;
+}
+
+interface AddWarehouseArgs {
+  name: string;
+  location: string;
+  capacity: number;
+  items: any[];
+}
+
+interface AddItemArgs {
+  warehouseId: string;
+  item: any;
+}
+
+interface UpdateItemArgs {
+  warehouseId: string;
+  index: number;
+  newItem: any;
+}
+
+interface DeleteItemArgs {
+  warehouseId: string;
+  itemName: string;
+}
+
+interface Context {
+  user?: {
+    _id: string;
+    role: string;
+  };
 }
 
 const resolvers = {
   Query: {
-    users: async () => {
-      return User.find();
-    },
-    user: async (_parent: any, { username }: UserArgs) => {
-      return User.findOne({ username });
-    },
-
-    // Query to get the authenticated user's information
-    // The 'me' query relies on the context to check if the user is authenticated
-    me: async (_parent: any, _args: any, context: any) => {
-      // If the user is authenticated, find and return the user's information along with their thoughts
+    me: async (_parent: any, _args: any, context: Context) => {
       if (context.user) {
         return User.findOne({ _id: context.user._id });
       }
-      // If the user is not authenticated, throw an AuthenticationError
-      throw new AuthenticationError('Could not authenticate user.');
+      throw new AuthenticationError('Not authenticated');
+    },
+    getUser: async (_parent: any, { userId }: { userId: string }) => {
+      return await User.findById(userId);
+    },
+    getUsers: async () => {
+      return await User.find();
+    },
+    getTruck: async (_parent: any, { truckId }: { truckId: string }) => {
+      return await Truck.findById(truckId);
+    },
+    getTrucks: async () => {
+      return await Truck.find();
+    },
+    getWarehouse: async (_parent: any, { warehouseId }: { warehouseId: string }) => {
+      return await Warehouse.findById(warehouseId);
+    },
+    getWarehouses: async () => {
+      return await Warehouse.find();
     },
   },
   Mutation: {
-    addUser: async (_parent: any, { input }: AddUserArgs) => {
-      // Create a new user with the provided username, email, and password
-      const user = await User.create({ ...input });
-
-      // Sign a token with the user's information
-      const token = signToken(user.username, user.email, user._id, user.role);
-
-      // Return the token and the user
+    login: async (_parent: any, { email, password }: LoginArgs) => {
+      const user = await User.findOne({ email }) as { _id: string; role: string; isCorrectPassword: (password: string) => Promise<boolean> };
+      if (!user) {
+        throw new AuthenticationError('Invalid email or password');
+      }
+      const correctPw = await user.isCorrectPassword(password);
+      if (!correctPw) {
+        throw new AuthenticationError('Invalid email or password');
+      }
+      const token = signToken(user._id, user.role);
       return { token, user };
     },
-
-    login: async (_parent: any, { email, password }: LoginUserArgs) => {
-      // Find a user with the provided email
-      const user = await User.findOne({ email });
-
-      // If no user is found, throw an AuthenticationError
-      if (!user) {
-        throw new AuthenticationError('Could not authenticate user.');
-      }
-
-      // Check if the provided password is correct
-      const correctPw = await user.isCorrectPassword(password);
-
-      // If the password is incorrect, throw an AuthenticationError
-      if (!correctPw) {
-        throw new AuthenticationError('Could not authenticate user.');
-      }
-
-      // Sign a token with the user's information
-      const token = signToken(user.username, user.email, user._id, user.role);
-
-      // Return the token and the user
-      return { token, user };
-    }
+    addUser: async (_parent: any, { username, email, password, role, status }: AddUserArgs) => {
+      const user = await User.create({ username, email, password, role, status });
+      return user;
+    },
+    updateUserStatus: async (_parent: any, { userId, status }: UpdateUserStatusArgs) => {
+      return await User.findByIdAndUpdate(
+        userId,
+        { status },
+        { new: true }
+      );
+    },
+    addTruck: async (_parent: any, { truckId, truckName, truckCapacity, driverName, status, assignedWarehouse }: AddTruckArgs) => {
+      const truck = await Truck.create({ truckId, truckName, truckCapacity, driverName, status, assignedWarehouse });
+      return truck;
+    },
+    deleteTruck: async (_parent: any, { truckId }: { truckId: string }) => {
+      return await Truck.findByIdAndDelete(truckId);
+    },
+    addWarehouse: async (_parent: any, { name, location, capacity, items }: AddWarehouseArgs) => {
+      const warehouse = await Warehouse.create({ name, location, capacity, items });
+      return warehouse;
+    },
+    updateWarehouseCapacity: async (_parent: any, { warehouseId, capacity }: { warehouseId: string; capacity: number }) => {
+      return await Warehouse.findByIdAndUpdate(
+        warehouseId,
+        { capacity },
+        { new: true }
+      );
+    },
+    deleteWarehouse: async (_parent: any, { warehouseId }: { warehouseId: string }) => {
+      return await Warehouse.findByIdAndDelete(warehouseId);
+    },
+    addItem: async (_parent: any, { warehouseId, item }: AddItemArgs) => {
+      return await Warehouse.findByIdAndUpdate(
+        warehouseId,
+        { $push: { items: item } },
+        { new: true }
+      );
+    },
+    updateItem: async (_parent: any, { warehouseId, index, newItem }: UpdateItemArgs) => {
+      const warehouse = await Warehouse.findById(warehouseId);
+      if (!warehouse) throw new Error('Warehouse not found');
+      warehouse.items[index] = newItem;
+      await warehouse.save();
+      return warehouse;
+    },
+    deleteItem: async (_parent: any, { warehouseId, itemName }: DeleteItemArgs) => {
+      return await Warehouse.findByIdAndUpdate(
+        warehouseId,
+        { $pull: { items: { itemName } } },
+        { new: true }
+      );
+    },
   },
 };
 
