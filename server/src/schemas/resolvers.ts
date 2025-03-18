@@ -11,16 +11,15 @@ interface User{
   email: string,
   password: string,
   role: string,
-  status: boolean
+  status: string
 }
 
 interface Warehouse{
   warehouseId: string,
   name: string,
   location: string,
-  status: boolean,
-  items: string[],
-  quantity: number
+  capacity: number,
+  items: [Item]
 }
 
 interface Truck{
@@ -28,8 +27,14 @@ interface Truck{
   truckName: string,
   truckCapacity: number,
   driverName: string,
-  status: 'Available' | 'In Transit',
+  status: string,
   assignedWarehouse: Warehouse["warehouseId"]
+}
+
+interface Item{
+  itemName: string,
+  quantity: number,
+  arrivalDate: string
 }
 
 interface AddUserArgs {
@@ -62,16 +67,15 @@ interface TruckArgs {
 interface addWarehouse {
   name: string,
   location: string,
-  status: boolean,
-  items: string[],
-  quantity: number
+  capacity: number,
+  items: [Item]
 }
 interface AddTruck {
   truckId: string,
   truckName: string,
   truckCapacity: number,
   driverName: string,
-  status: boolean,
+  status: string,
   assignedWarehouse: number
 }
 
@@ -127,8 +131,8 @@ const resolvers = {
       // User.save()
       return newUser;
     },
-    addWarehouse: async (_parent: any, { name, location, status, items, quantity }: addWarehouse) => {
-      const newWarehouse = Warehouse.create({ name, location, status, items, quantity });
+    addWarehouse: async (_parent: any, { name, location, status, items }: addWarehouse) => {
+      const newWarehouse = Warehouse.create({ name, location, status, items});
       return newWarehouse;
     },
     addTruck: async (_parent: any, { truckId, truckName, truckCapacity, driverName, status, assignedWarehouse }: AddTruck) => {

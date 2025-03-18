@@ -3,11 +3,11 @@ import gql from 'graphql-tag';
 const typeDefs = gql`
     type User {
         userId: String!
-        name: String!
+        username: String!
         email: String!
         password: String!
         role: String!
-        status: Boolean!
+        status: String!
     }
     type Warehouse {
         warehouseId: String!
@@ -17,9 +17,13 @@ const typeDefs = gql`
     }
     type Truck {
         truckId: String!
-        driver: String!
-        status: Boolean!
+        truckName: String!
+        truckCapacity: Int!
+        driverName: String!
+        status: String!
+        assignedWarehouse: String!
     }
+
     type Auth {
         token: ID!
         user: User!
@@ -49,7 +53,7 @@ const typeDefs = gql`
         login(email: String!, password: String!): Auth
         addUser(username: String, email: String, password: String, role: String, status: Boolean, isCorrectPassword: Boolean): User
         addWarehouse (name: String!, location: String!, items: [ItemInput], quantity: Int): Warehouse
-        addTruck(driver: String!, status:Boolean!): Truck
+        addTruck(truckName: String, truckCapacity: Int!, driverName: String!, status: String!): Truck
         deleteTruck(truckId: String!): Truck
         deleteWarehouse(warehouseId: String!): Warehouse
         updateUserStatus(userId:String!, status: Boolean!): User
