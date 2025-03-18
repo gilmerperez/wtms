@@ -10,6 +10,18 @@ export const QUERY_USER = gql`
   }
 `;
 
+export const QUERY_USERS = gql`
+  query Users {
+    users {
+      _id
+      username
+      email
+      role
+      status
+    }
+  }
+`;
+
 export const QUERY_ME = gql`
   query me {
     me {
