@@ -33,7 +33,7 @@ const UserMgt = () => {
   const { loading, error, data } = useQuery(QUERY_USERS);
   useEffect(() => {
     if (data) {
-      setUsers(data.users);
+      setUsers(data.getUsers || []); // Fallback to an empty array if data.getUsers is undefined
     }
   }, [data]);
 
@@ -69,7 +69,15 @@ const UserMgt = () => {
       return;
     }
     try {
-      await addUser({ variables: { input: newUser } });
+      await addUser({
+        variables: {
+          username: newUser.username,
+          email: newUser.email,
+          password: newUser.password,
+          role: newUser.role,
+          status: "active", // Default status for new users
+        },
+      });
       setNewUser({ username: "", email: "", password: "", role: "Driver" });
     } catch (err) {
       console.error("Error adding user:", err);
@@ -90,7 +98,12 @@ const UserMgt = () => {
   // Deactivating a user
   const handleDeactivateUser = async (userId: string) => {
     try {
-      await deactivateUser({ variables: { id: userId } });
+      await deactivateUser({
+        variables: {
+          userId,
+          status: "inactive", // Set status to "inactive"
+        },
+      });
     } catch (err) {
       console.error("Error deactivating user:", err);
     }
