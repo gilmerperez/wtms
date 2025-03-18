@@ -1,4 +1,6 @@
-import { User } from '../models/index.js';
+import Truck from '../models/Truck.js';
+import User  from '../models/User.js';
+import Warehouse from '../models/Warehouse.js';
 import process from 'process';
 
 const cleanDB = async (): Promise<void> => {
@@ -6,6 +8,8 @@ const cleanDB = async (): Promise<void> => {
 
     // Delete documents from User collection
     await User.deleteMany({});
+    await Truck.deleteMany({});
+    await Warehouse.deleteMany({});
     console.log('User collection cleaned.');
 
   } catch (err) {
