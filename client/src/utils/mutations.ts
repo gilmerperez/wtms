@@ -13,14 +13,35 @@ export const LOGIN_USER = gql`
 `;
 
 export const ADD_USER = gql`
-  mutation Mutation($input: UserInput!) {
-  addUser(input: $input) {
-    user {
-      username
+  mutation AddUser($input: UserInput!) {
+    addUser(input: $input) {
       _id
+      username
+      email
+      role
+      status
     }
-    token
   }
-}
+`;
+
+export const UPDATE_USER = gql`
+  mutation UpdateUser($id: ID!, $input: UserInput!) {
+    updateUser(id: $id, input: $input) {
+      _id
+      username
+      email
+      role
+      status
+    }
+  }
+`;
+
+export const DEACTIVATE_USER = gql`
+  mutation DeactivateUser($id: ID!) {
+    deactivateUser(id: $id) {
+      _id
+      status
+    }
+  }
 `;
 
