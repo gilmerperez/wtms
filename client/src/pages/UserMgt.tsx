@@ -1,4 +1,4 @@
-import '../styles/UserMgt.css'
+import "../styles/UserMgt.css";
 import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_USERS } from "../utils/queries";
