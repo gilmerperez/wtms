@@ -14,6 +14,11 @@ const handleAddUser = async (e) => {
   }
 };
 
+const { loading, error, data } = useQuery(QUERY_USERS);
+
+if (loading) return <p>Loading...</p>;
+if (error) return <p>Error loading users: {error.message}</p>;
+
 const UserMgt = () => {
   return (
     <main>
