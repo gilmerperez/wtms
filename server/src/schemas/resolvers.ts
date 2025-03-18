@@ -4,13 +4,40 @@ import Truck from "../models/Truck.js"
 import { signToken, AuthenticationError } from '../utils/auth.js'
 
 // Define types for the arguments
+
+interface User{
+  userId: string,
+  username: string,
+  email: string,
+  password: string,
+  role: string,
+  status: boolean
+}
+
+interface Warehouse{
+  warehouseId: string,
+  name: string,
+  location: string,
+  status: boolean,
+  items: string[],
+  quantity: number
+}
+
+interface Truck{
+  truckId: string,
+  truckName: string,
+  truckCapacity: number,
+  driverName: string,
+  status: 'Available' | 'In Transit',
+  assignedWarehouse: Warehouse["warehouseId"]
+}
+
 interface AddUserArgs {
   username: string,
   email: string,
   password: string,
   role: string,
-  status: boolean,
-  isCorrectPassword: boolean
+  status: boolean
 }
 interface UpdateUserStatus {
   userId: string,
@@ -36,7 +63,7 @@ interface addWarehouse {
   name: string,
   location: string,
   status: boolean,
-  items: [string],
+  items: string[],
   quantity: number
 }
 interface AddTruck {
@@ -95,8 +122,8 @@ const resolvers = {
       const token = signToken(user.email, user.password, user.role, user.status)
       return { token, user }
     },
-    addUser: async (_parent: any, { username, email, password, role, status, isCorrectPassword }: AddUserArgs) => {
-      const newUser = await User.create({ username, email, password, role, status, isCorrectPassword });
+    addUser: async (_parent: any, { username, email, password, role, status}: AddUserArgs) => {
+      const newUser = await User.create({ username, email, password, role, status});
       // User.save()
       return newUser;
     },
