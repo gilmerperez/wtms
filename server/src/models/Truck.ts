@@ -1,5 +1,5 @@
-import { Schema, model, Document } from 'mongoose';
 import mongoose from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
 
 interface ITruck extends Document {
   truckId: string;
@@ -12,29 +12,29 @@ interface ITruck extends Document {
 
 const truckSchema = new Schema<ITruck>(
   {
-    truckId: { 
+    truckId: {
       type: String,
-      required: true, 
-      unique: true 
+      required: true,
+      unique: true
     },
-    truckName: { 
+    truckName: {
       type: String,
-      required: true, 
+      required: true,
     },
-    truckCapacity: { 
+    truckCapacity: {
       type: Number,
     },
-    driverName: { 
-      type: String, 
-      required: true 
+    driverName: {
+      type: String,
+      required: true
     },
     status: {
-       type: String,
-       enum: ['Available', 'In Transit'], default: 'Available' 
-      },
+      type: String,
+      enum: ['Available', 'In Transit'], default: 'Available'
+    },
     assignedWarehouse: {
-       type: mongoose.Schema.Types.ObjectId, ref: 'Warehouse' 
-      },
+      type: mongoose.Schema.Types.ObjectId, ref: 'Warehouse'
+    },
   },
   {
     timestamps: true,
