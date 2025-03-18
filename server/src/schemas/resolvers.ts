@@ -4,13 +4,45 @@ import Truck from "../models/Truck.js"
 import { signToken, AuthenticationError } from '../utils/auth.js'
 
 // Define types for the arguments
+
+interface User{
+  userId: string,
+  username: string,
+  email: string,
+  password: string,
+  role: string,
+  status: string
+}
+
+interface Warehouse{
+  warehouseId: string,
+  name: string,
+  location: string,
+  capacity: number,
+  items: [Item]
+}
+
+interface Truck{
+  truckId: string,
+  truckName: string,
+  truckCapacity: number,
+  driverName: string,
+  status: string,
+  assignedWarehouse: Warehouse["warehouseId"]
+}
+
+interface Item{
+  itemName: string,
+  quantity: number,
+  arrivalDate: string
+}
+
 interface AddUserArgs {
   username: string,
   email: string,
   password: string,
   role: string,
-  status: boolean,
-  isCorrectPassword: boolean
+  status: boolean
 }
 interface UpdateUserStatus {
   userId: string,
@@ -35,16 +67,15 @@ interface TruckArgs {
 interface addWarehouse {
   name: string,
   location: string,
-  status: boolean,
-  items: [string],
-  quantity: number
+  capacity: number,
+  items: [Item]
 }
 interface AddTruck {
   truckId: string,
   truckName: string,
   truckCapacity: number,
   driverName: string,
-  status: boolean,
+  status: string,
   assignedWarehouse: number
 }
 
@@ -95,13 +126,13 @@ const resolvers = {
       const token = signToken(user.email, user.password, user.role, user.status)
       return { token, user }
     },
-    addUser: async (_parent: any, { username, email, password, role, status, isCorrectPassword }: AddUserArgs) => {
-      const newUser = await User.create({ username, email, password, role, status, isCorrectPassword });
+    addUser: async (_parent: any, { username, email, password, role, status}: AddUserArgs) => {
+      const newUser = await User.create({ username, email, password, role, status});
       // User.save()
       return newUser;
     },
-    addWarehouse: async (_parent: any, { name, location, status, items, quantity }: addWarehouse) => {
-      const newWarehouse = Warehouse.create({ name, location, status, items, quantity });
+    addWarehouse: async (_parent: any, { name, location, status, items }: addWarehouse) => {
+      const newWarehouse = Warehouse.create({ name, location, status, items});
       return newWarehouse;
     },
     addTruck: async (_parent: any, { truckId, truckName, truckCapacity, driverName, status, assignedWarehouse }: AddTruck) => {
