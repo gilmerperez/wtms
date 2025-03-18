@@ -13,38 +13,51 @@ const typeDefs = gql`
         warehouseId: String!
         name: String!
         location: String!
-        status: Boolean!
-        items: [Item]
-        capacity: Int
-        # arrivalDate: Date
+        items: [Item]!
     }
     type Truck {
         truckId: String!
         driver: String!
         status: Boolean!
     }
-    type Query{
+    type Auth {
+        token: ID!
+        user: User!
+    }
+    type Item {
+        itemName: String!
+        quantity: Int!
+        arrivalDate: String!
+    }
+    input ItemInput {
+        itemName: String!
+        quantity: Int!
+        arrivalDate: String!
+    }
+
+
+    type Query {
         getUsers: [User]!
         getUser(userId: ID): User
         getWarehouses: [Warehouse]!
-        getWarehouse:(warehouseId: ID): Warehouse
+        getWarehouse(warehouseId: ID): Warehouse
         getTrucks: [Truck]
         getTruck(truckId: ID): Truck
         me: User
     }
     type Mutation {
-        login (email: String!, password: String!)
+        login(email: String!, password: String!): Auth
         addUser(username: String, email: String, password: String, role: String, status: Boolean, isCorrectPassword: Boolean): User
-        addWarehouse (name: String!, location: String!, status: Status!, items: [Item], quantity: Int): Warehouse
-        addTruck(driver: String!, status:Boolean!)
-        deleteTruck(truckId: String!)
-        deleteWarehouse(warehouseId: String!)
-        updateUserStatus(userId:String!, status: Boolean!)
-        updateWarehouseCapacity(warehouseId: String!, capacity: Int)
+        addWarehouse (name: String!, location: String!, items: [ItemInput], quantity: Int): Warehouse
+        addTruck(driver: String!, status:Boolean!): Truck
+        deleteTruck(truckId: String!): Truck
+        deleteWarehouse(warehouseId: String!): Warehouse
+        updateUserStatus(userId:String!, status: Boolean!): User
+        updateWarehouseCapacity(warehouseId: String!): Warehouse
         # updateTruckStatus(truckId: ID!, status: Boolean)
-        addItem(warehouseId: String!, index: Int)
-        updateItem(warehouseId: String!, index: Int, newItem: String)
-        deleteItem(warehouseId: String!, item: String)
+        addItem(warehouseId: String!, index: Int): String
+        updateItem(warehouseId: String!, index: Int, newItem: String): String
+        deleteItem(warehouseId: String!, item: String): String
 
         
 
