@@ -1,5 +1,5 @@
 import '../styles/UserMgt.css'
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_USERS } from "../utils/queries";
 import { ADD_USER, UPDATE_USER, DEACTIVATE_USER } from "../utils/mutations";

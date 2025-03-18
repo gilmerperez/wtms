@@ -11,7 +11,7 @@ const NavigationBar = () => {
     <div style={styles.navbar}>
       {/* Logo Section */}
       <div style={styles.logoSection}>
-        <img src="/logo.png" alt="Logo" style={styles.logo} />
+        <img src="assets\logos\logo_noBg.png" alt="WTMS Logo" style={styles.logo} />
       </div>
 
       {/* Navigation Links */}
