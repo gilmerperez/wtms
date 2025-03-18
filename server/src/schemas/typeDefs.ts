@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 
 const typeDefs = gql`
     type User {
-        userId: ID!
+        userId: String!
         name: String!
         email: String!
         password: String!
@@ -10,7 +10,7 @@ const typeDefs = gql`
         status: Boolean!
     }
     type Warehouse {
-        warehouseId: ID!
+        warehouseId: String!
         name: String!
         location: String!
         status: Boolean!
@@ -19,21 +19,33 @@ const typeDefs = gql`
         # arrivalDate: Date
     }
     type Truck {
-        truckId: ID!
+        truckId: String!
         driver: String!
         status: Boolean!
     }
-
+    type Query{
+        getUsers: [User]!
+        getUser(userId: ID): User
+        getWarehouses: [Warehouse]!
+        getWarehouse:(warehouseId: ID): Warehouse
+        getTrucks: [Truck]
+        getTruck(truckId: ID): Truck
+        me: User
+    }
     type Mutation {
         login (email: String!, password: String!)
-        addUser (name: String!, email: String!, password: String!, role: Role!, status: Status!): User
+        addUser(username: String, email: String, password: String, role: String, status: Boolean, isCorrectPassword: Boolean): User
         addWarehouse (name: String!, location: String!, status: Status!, items: [Item], quantity: Int): Warehouse
         addTruck(driver: String!, status:Boolean!)
-        deleteTruck(truckId: ObjectId)
-        deleteWarehouse(warehouseId: ObjectId)
-        updateUserStatus(userId:ID!, status: Boolean!)
-        # updateWarehouseStatus(warehouseId: ID!, status:Boolean!)
-        # updateTruckStatus(truckId:ID!, status: Boolean)
+        deleteTruck(truckId: String!)
+        deleteWarehouse(warehouseId: String!)
+        updateUserStatus(userId:String!, status: Boolean!)
+        updateWarehouseCapacity(warehouseId: String!)
+        # updateTruckStatus(truckId: ID!, status: Boolean)
+        addItem(warehouseId: String!, index: Int)
+        updateItem(warehouseId: String!, index: Int, newItem: String)
+        deleteItem(warehouseId: String!, item: string)
+
         
 
     }
