@@ -15,32 +15,32 @@ interface IWarehouse extends Document {
 
 const warehouseSchema = new Schema<IWarehouse>(
   {
-    name: { 
-      type: String, 
-      required: true 
+    name: {
+      type: String,
+      required: true
     },
-    location: { 
-      type: String, 
-      required: true 
+    location: {
+      type: String,
+      required: true
     },
     capacity: {
-       type: Number,
-      required: true 
+      type: Number,
+      required: true
     },
     items: [
       {
         itemName: {
-           type: String,
-           required: true 
-          },
+          type: String,
+          required: true
+        },
         quantity: {
-           type: Number, 
-           required: true 
-          },
+          type: Number,
+          required: true
+        },
         arrivalDate: {
-           type: Date, 
-           required: true 
-          },
+          type: Date,
+          required: true
+        },
       },
     ],
   },

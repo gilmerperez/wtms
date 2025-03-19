@@ -1,8 +1,8 @@
-import express from 'express';
 import path from 'node:path';
-import type { Request, Response } from 'express';
+import express from 'express';
 import db from './config/connection.js'
 import { ApolloServer } from '@apollo/server';
+import type { Request, Response } from 'express';
 import { expressMiddleware } from '@apollo/server/express4';
 import { typeDefs, resolvers } from './schemas/index.js';
 import { authenticateToken } from './utils/auth.js';
@@ -28,11 +28,11 @@ const startApolloServer = async () => {
     }
   ));
 
-    app.use(express.static(path.join(process.cwd(), '../client/dist')));
+  app.use(express.static(path.join(process.cwd(), '../client/dist')));
 
-    app.get('*', (_req: Request, res: Response) => {
-      res.sendFile(path.join(process.cwd(), '../client/dist/index.html'));
-    });
+  app.get('*', (_req: Request, res: Response) => {
+    res.sendFile(path.join(process.cwd(), '../client/dist/index.html'));
+  });
 
   app.listen(PORT, () => {
     console.log(`API server running on port ${PORT}!`);

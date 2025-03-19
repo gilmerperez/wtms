@@ -1,6 +1,5 @@
 import { gql } from '@apollo/client';
 
-//? Get local user data_________________________________________________________
 export const QUERY_ME = gql`
   query me {
     me {
@@ -13,8 +12,6 @@ export const QUERY_ME = gql`
   }
 `;
 
-
-//? User queries____________________________________________________________
 export const QUERY_USER = gql`
   query user($username: String!) {
     user(username: $username) {
@@ -27,9 +24,8 @@ export const QUERY_USER = gql`
     }
 `;
 
-
-export const QUERY_ALL_USERS = gql`
-  query getUsers {
+export const QUERY_USERS = gql`
+  query GetUsers {
     getUsers {
       _id
       username
@@ -38,9 +34,8 @@ export const QUERY_ALL_USERS = gql`
       status
     }
   }
-`; 
+`;
 
-//? Warehouse queries________________________________________________________
 export const QUERY_WAREHOUSE = gql`
   query warehouse($warehouseId: ID!) {
     me {
@@ -73,10 +68,9 @@ export const QUERY_ALL_WAREHOUSES = gql`
   }
 `;
 
-//? Truck queries_____________________________________________________________
-export const QUERY_ALL_TRUCKS = gql`
-  query getTrucks {
-    getTrucks {
+export const QUERY_TRUCK = gql`
+  query truck($truckId: ID!) {
+    me {
       _id
       truckId
       truckName
@@ -88,9 +82,9 @@ export const QUERY_ALL_TRUCKS = gql`
   }
 `;
 
-export const QUERY_TRUCK = gql`
-  query truck($truckId: ID!) {
-    me {
+export const QUERY_ALL_TRUCKS = gql`
+  query getTrucks {
+    getTrucks {
       _id
       truckId
       truckName

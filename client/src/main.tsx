@@ -1,6 +1,10 @@
 import ReactDOM from "react-dom/client";
 import AuthService from "./utils/auth";
-import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
 
 import App from "./App.jsx";
 import Login from "./pages/Login";
@@ -72,7 +76,7 @@ const router = createBrowserRouter([
   },
 ]);
 
-const rootElement = document.getElementById('root');
+const rootElement = document.getElementById("root");
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(<RouterProvider router={router} />);
 }

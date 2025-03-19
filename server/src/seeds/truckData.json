@@ -1,27 +1,26 @@
 [
-    {
-      "truckId": "T001",
-      "truckName": "Truck 1",
-      "truckCapacity": 15000,
-      "driverName": "John Doe",
-      "status": "Available",
-      "assignedWarehouse": "603c72ef4d8b8b14456c1bc5"  
-    },
-    {
-      "truckId": "T002",
-      "truckName": "Truck 2",
-      "truckCapacity": 12000,
-      "driverName": "Jane Smith",
-      "status": "In Transit",
-      "assignedWarehouse": "603c72ef4d8b8b14456c1bc6"  
-    },
-    {
-      "truckId": "T003",
-      "truckName": "Truck 3",
-      "truckCapacity": 18000,
-      "driverName": "Alice Brown",
-      "status": "Available",
-      "assignedWarehouse": "603c72ef4d8b8b14456c1bc7"  
-    }
-  ]
-  
+  {
+    "truckId": "T001",
+    "truckName": "Truck 1",
+    "truckCapacity": 15000,
+    "driverName": "John Doe",
+    "status": "Available",
+    "assignedWarehouse": "603c72ef4d8b8b14456c1bc5"
+  },
+  {
+    "truckId": "T002",
+    "truckName": "Truck 2",
+    "truckCapacity": 12000,
+    "driverName": "Jane Smith",
+    "status": "In Transit",
+    "assignedWarehouse": "603c72ef4d8b8b14456c1bc6"
+  },
+  {
+    "truckId": "T003",
+    "truckName": "Truck 3",
+    "truckCapacity": 18000,
+    "driverName": "Alice Brown",
+    "status": "Available",
+    "assignedWarehouse": "603c72ef4d8b8b14456c1bc7"
+  }
+]
