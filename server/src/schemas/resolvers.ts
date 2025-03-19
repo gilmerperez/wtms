@@ -37,7 +37,7 @@ interface Truck {
 
 }
 
-interface Item{
+interface Item {
   itemName: string,
   quantity: number,
   arrivalDate: string
@@ -161,9 +161,10 @@ const resolvers = {
       const token = signToken(user._id, user.role);
       return { token, user };
     },
-    addUser: async (_parent: any, { username, email, password, role }: AddUserArgs) => {
-      const user = await User.create({ username, email, password, role });
-      return user;
+    addUser: async (_parent: any, { username, email, password, role, status }: AddUserArgs) => {
+      const user = await User.create({ username, email, password, role, status }) as { _id: string; role: string };
+      const token = signToken(user._id, user.role); // Generate a token
+      return { token, user }; // Return the token and user
     },
     updateUser: async (_parent: any, { id, input }: { id: string; input: { role?: string; status?: string } }) => {
       return await User.findByIdAndUpdate(
@@ -184,7 +185,7 @@ const resolvers = {
       return truck;
     },
     deleteTruck: async (_parent: any, { truckId }: { truckId: string }) => {
-      return await Truck.findOneAndDelete({truckId});
+      return await Truck.findOneAndDelete({ truckId });
     },
     addWarehouse: async (_parent: any, { name, location, capacity, items }: AddWarehouseArgs) => {
       const warehouse = await Warehouse.create({ name, location, capacity, items });
@@ -208,7 +209,7 @@ const resolvers = {
         { new: true }
       );
     },
-      
+
     updateItem: async (_parent: any, { warehouseId, index, newItem }: UpdateItemArgs) => {
       const warehouse = await Warehouse.findById(warehouseId);
       if (!warehouse) throw new Error('Warehouse not found');
