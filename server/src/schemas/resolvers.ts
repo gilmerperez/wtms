@@ -57,7 +57,7 @@ interface UpdateUserStatusArgs {
   status: string;
 }
 
-interface UserArgs {
+interface AddUserArgs {
   username: string
 }
 
@@ -89,21 +89,21 @@ interface UpdateItemArgs {
   newItem: any;
 }
 
-interface addWarehouse {
-  name: string,
-  location: string,
-  capacity: number,
-  items: [Item]
-}
+// interface addWarehouse {
+//   name: string,
+//   location: string,
+//   capacity: number,
+//   items: [Item]
+// }
 
-interface AddTruck {
-  truckId: string,
-  truckName: string,
-  truckCapacity: number,
-  driverName: string,
-  status: string,
-  assignedWarehouse: number
-}
+// interface addTruck {
+//   truckId: string,
+//   truckName: string,
+//   truckCapacity: number,
+//   driverName: string,
+//   status: string,
+//   assignedWarehouse: number
+// }
 
 interface DeleteItemArgs {
   warehouseId: string;
