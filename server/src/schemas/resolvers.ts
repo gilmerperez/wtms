@@ -162,7 +162,13 @@ const resolvers = {
       const user = await User.create({ username, email, password, role, status });
       return user;
     },
-
+    updateUser: async (_parent: any, { id, input }: { id: string; input: { role?: string; status?: string } }) => {
+      return await User.findByIdAndUpdate(
+        id,
+        { $set: input }, // Update only the fields provided in the input
+        { new: true }
+      );
+    },
     updateUserStatus: async (_parent: any, { userId, status }: UpdateUserStatusArgs) => {
       return await User.findByIdAndUpdate(
         userId,
