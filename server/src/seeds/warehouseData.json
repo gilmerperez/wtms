@@ -1,33 +1,56 @@
 [
-    {
-      "_id": "603c72ef4d8b8b14456c1bc5",  
-      "name": "Warehouse A",
-      "location": "New York, USA",
-      "capacity": 100000,
-      "items": [
-        { "itemName": "Item 1", "quantity": 500, "arrivalDate": "2025-01-10T00:00:00Z" },
-        { "itemName": "Item 2", "quantity": 200, "arrivalDate": "2025-02-15T00:00:00Z" }
-      ]
-    },
-    {
-      "_id": "603c72ef4d8b8b14456c1bc6",  
-      "name": "Warehouse B",
-      "location": "Los Angeles, USA",
-      "capacity": 150000,
-      "items": [
-        { "itemName": "Item 3", "quantity": 300, "arrivalDate": "2025-03-05T00:00:00Z" },
-        { "itemName": "Item 4", "quantity": 700, "arrivalDate": "2025-03-20T00:00:00Z" }
-      ]
-    },
-    {
-      "_id": "603c72ef4d8b8b14456c1bc7",  
-      "name": "Warehouse C",
-      "location": "Chicago, USA",
-      "capacity": 80000,
-      "items": [
-        { "itemName": "Item 5", "quantity": 400, "arrivalDate": "2025-04-01T00:00:00Z" },
-        { "itemName": "Item 6", "quantity": 250, "arrivalDate": "2025-04-10T00:00:00Z" }
-      ]
-    }
-  ]
-  
+  {
+    "_id": "603c72ef4d8b8b14456c1bc5",
+    "name": "Warehouse A",
+    "location": "New York, USA",
+    "capacity": 100000,
+    "items": [
+      {
+        "itemName": "Item 1",
+        "quantity": 500,
+        "arrivalDate": "2025-01-10T00:00:00Z"
+      },
+      {
+        "itemName": "Item 2",
+        "quantity": 200,
+        "arrivalDate": "2025-02-15T00:00:00Z"
+      }
+    ]
+  },
+  {
+    "_id": "603c72ef4d8b8b14456c1bc6",
+    "name": "Warehouse B",
+    "location": "Los Angeles, USA",
+    "capacity": 150000,
+    "items": [
+      {
+        "itemName": "Item 3",
+        "quantity": 300,
+        "arrivalDate": "2025-03-05T00:00:00Z"
+      },
+      {
+        "itemName": "Item 4",
+        "quantity": 700,
+        "arrivalDate": "2025-03-20T00:00:00Z"
+      }
+    ]
+  },
+  {
+    "_id": "603c72ef4d8b8b14456c1bc7",
+    "name": "Warehouse C",
+    "location": "Chicago, USA",
+    "capacity": 80000,
+    "items": [
+      {
+        "itemName": "Item 5",
+        "quantity": 400,
+        "arrivalDate": "2025-04-01T00:00:00Z"
+      },
+      {
+        "itemName": "Item 6",
+        "quantity": 250,
+        "arrivalDate": "2025-04-10T00:00:00Z"
+      }
+    ]
+  }
+]

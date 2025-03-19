@@ -1,76 +1,12 @@
-import React, { useState } from "react";
+import "../styles/Login.css";
+import { useState } from "react";
 import AuthService from "../utils/auth";
 import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../utils/mutations";
 
-// Styles
-const styles = {
-  container: {
-    display: "flex",
-    flexDirection: "column" as "column",
-    alignItems: "center",
-    justifyContent: "center",
-    height: "100vh",
-    backgroundColor: "#f5f5f5",
-  },
-  topBar: {
-    width: "100%",
-    height: "60px",
-    backgroundColor: "#ff8c42",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    position: "fixed" as "fixed",
-    top: 0,
-  },
-  logo: {
-    height: "40px",
-  },
-  loginBox: {
-    backgroundColor: "#fff",
-    padding: "20px",
-    borderRadius: "8px",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-    width: "300px",
-    textAlign: "center" as "center",
-  },
-  loginTitle: {
-    marginBottom: "20px",
-    color: "#333",
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column" as "column",
-  },
-  input: {
-    padding: "10px",
-    marginBottom: "15px",
-    border: "1px solid #ff8c42",
-    borderRadius: "4px",
-    outline: "none",
-  },
-  button: {
-    padding: "10px",
-    backgroundColor: "#ff8c42",
-    color: "#fff",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-  },
-  signupLink: {
-    marginTop: "10px",
-    color: "#ff8c42",
-    textDecoration: "none",
-  },
-  error: {
-    color: "red",
-    marginTop: "10px",
-  },
-};
-
 const Login = () => {
-  const [email, setEmail] = useState(""); // Change username to email
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginUser, { error }] = useMutation<
     { login: { token: string } },
@@ -82,12 +18,12 @@ const Login = () => {
 
     try {
       const { data } = await loginUser({
-        variables: { email, password }, // Use email directly
+        variables: { email, password },
       });
 
       if (data?.login?.token) {
         AuthService.login(data.login.token);
-        window.location.assign('/landing');
+        window.location.assign("/landing");
       }
     } catch (err) {
       console.error("Login error:", err);
@@ -95,34 +31,38 @@ const Login = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.topBar}>
-        <img src="assets\logos\logo_noBg.png" alt="WTMS Logo" style={styles.logo} />
+    <div className="container">
+      <div className="topBar">
+        <img
+          src="assets/logos/logo_noBg.png"
+          alt="WTMS Logo"
+          className="logo"
+        />
       </div>
 
-      <div style={styles.loginBox}>
-        <h1 style={styles.loginTitle}>Login</h1>
-        <form style={styles.form} onSubmit={handleSubmit}>
+      <div className="loginBox">
+        <h1 className="loginTitle">Login</h1>
+        <form className="form" onSubmit={handleSubmit}>
           <input
-            type="email" // Change to email input
+            type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            style={styles.input}
+            className="input"
           />
           <input
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            style={styles.input}
+            className="input"
           />
-          <button type="submit" style={styles.button}>
+          <button type="submit" className="button">
             Login
           </button>
         </form>
-        {error && <p style={styles.error}>Invalid email or password.</p>}
-        <p style={styles.signupLink}>
+        {error && <p className="error">Invalid email or password.</p>}
+        <p className="signupLink">
           New user? <Link to="/signup">Sign up here</Link>
         </p>
       </div>
