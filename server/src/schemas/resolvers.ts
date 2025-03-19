@@ -1,8 +1,14 @@
-import User from "../models/User.js"
-import Warehouse from "../models/Warehouse.js"
-import Truck from "../models/Truck.js"
-import { signToken, AuthenticationError } from '../utils/auth.js'
+import User from "../models/User.js";
+import Truck from "../models/Truck.js";
+import Warehouse from "../models/Warehouse.js";
+import { signToken, AuthenticationError } from '../utils/auth.js';
 
+
+// Define types for arguments
+interface LoginArgs {
+  email: string;
+  password: string;
+}
 // Define types for the arguments
 
 interface User{
@@ -28,6 +34,7 @@ interface Truck{
   driverName: string,
   status: string,
   assignedWarehouse: Warehouse["warehouseId"]
+
 }
 
 interface Item{
@@ -37,30 +44,49 @@ interface Item{
 }
 
 interface AddUserArgs {
-  username: string,
-  email: string,
-  password: string,
-  role: string,
-  status: boolean
-}
-interface UpdateUserStatus {
-  userId: string,
-  status: boolean
-}
-
-interface LoginUserArgs {
+  username: string;
   email: string;
   password: string;
+  role: string;
+  status: string;
+}
+
+
+interface UpdateUserStatusArgs {
+  userId: string;
+  status: string;
 }
 
 interface UserArgs {
   username: string
 }
-interface WarehouseArgs {
-  warehouseId: string
+
+interface AddTruckArgs {
+  truckId: string;
+  truckName: string;
+  truckCapacity: number;
+  driverName: string;
+  status: string;
+  assignedWarehouse: string;
 }
-interface TruckArgs {
-  truckId: string
+
+interface AddWarehouseArgs {
+  name: string;
+  location: string;
+  capacity: number;
+  items: any[];
+}
+
+
+interface AddItemArgs {
+  warehouseId: string;
+  item: any;
+}
+
+interface UpdateItemArgs {
+  warehouseId: string;
+  index: number;
+  newItem: any;
 }
 
 interface addWarehouse {
@@ -69,6 +95,7 @@ interface addWarehouse {
   capacity: number,
   items: [Item]
 }
+
 interface AddTruck {
   truckId: string,
   truckName: string,
@@ -78,128 +105,117 @@ interface AddTruck {
   assignedWarehouse: number
 }
 
+interface DeleteItemArgs {
+  warehouseId: string;
+  itemName: string;
+}
 
+interface Context {
+  user?: {
+    _id: string;
+    role: string;
+  };
+}
 
 const resolvers = {
   Query: {
-    getUsers: async () => {
-      return await User.find()
-    },
-    getUser: async (_parent: any, { username }: UserArgs) => {
-      return await User.findById(username);
-    },
-    getWarehouses: async () => {
-      return await Warehouse.find()
-    },
-    getWarehouse: async (_parent: any, { warehouseId }: WarehouseArgs) => {
-      return await Warehouse.findOne({ _id: warehouseId });
-    },
-    getTrucks: async () => {
-      return await Truck.find()
-    },
-    getTruck: async (_parent: any, { truckId }: TruckArgs) => {
-      return await Truck.findOne({ _id: truckId });
-    },
-    me: async (_parent: any, _args: any, context: any) => {
-      // If the user is authenticated, find and return the user's information along with their thoughts
+    me: async (_parent: any, _args: any, context: Context) => {
       if (context.user) {
         return User.findOne({ _id: context.user._id });
       }
-      // If the user is not authenticated, throw an AuthenticationError
-      throw new AuthenticationError('Could not authenticate user.');
+      throw new AuthenticationError('Not authenticated');
+    },
+
+    getUser: async (_parent: any, { userId }: { userId: string }) => {
+      return await User.findById(userId);
+    },
+    getUsers: async () => {
+      return await User.find();
+    },
+    getTruck: async (_parent: any, { truckId }: { truckId: string }) => {
+      return await Truck.findById(truckId);
+    },
+    getTrucks: async () => {
+      return await Truck.find();
+    },
+    getWarehouse: async (_parent: any, { warehouseId }: { warehouseId: string }) => {
+      return await Warehouse.findById(warehouseId);
+    },
+    getWarehouses: async () => {
+      return await Warehouse.find();
     },
   },
   Mutation: {
-    login: async (_parent: any, { email, password }: LoginUserArgs) => {
-      const user = await User.findOne({ email });
+    login: async (_parent: any, { email, password }: LoginArgs) => {
+      const user = await User.findOne({ email }) as { _id: string; role: string; isCorrectPassword: (password: string) => Promise<boolean> };
       if (!user) {
-        //NEED THIS FROM GILMER, IN THE AUTH.TS JWT FILE
-        throw AuthenticationError;
+        throw new AuthenticationError('Invalid email or password');
       }
-      const correctPw = await user.isCorrectPassword(password)
+      const correctPw = await user.isCorrectPassword(password);
       if (!correctPw) {
-        //REFER TO LINE 31
-        throw new AuthenticationError('Invalid Password')
+        throw new AuthenticationError('Invalid email or password');
       }
-      //REFER TO LINE 31
-      const token = signToken(user.email, user.password, user.role, user.status)
-      return { token, user }
+      const token = signToken(user._id, user.role);
+      return { token, user };
     },
-    addUser: async (_parent: any, { username, email, password, role, status}: AddUserArgs) => {
-      const newUser = await User.create({ username, email, password, role, status});
-      // User.save()
-      return newUser;
+    addUser: async (_parent: any, { username, email, password, role, status }: AddUserArgs) => {
+      const user = await User.create({ username, email, password, role, status });
+      return user;
     },
-    addWarehouse: async (_parent: any, { name, location, capacity, items }: addWarehouse) => {
-      const newWarehouse = Warehouse.create({ name, location, capacity, items});
-      return newWarehouse;
-    },
-    addTruck: async (_parent: any, { truckId, truckName, truckCapacity, driverName, status, assignedWarehouse }: AddTruck) => {
-      const newTruck = Truck.create({ truckId, truckName, truckCapacity, driverName, status, assignedWarehouse });
 
-      return newTruck;
-    },
-    addItem: async (_parent: any, { warehouseId, item }: { warehouseId: string, item: string }) => {
-      return await Warehouse.findByIdAndUpdate(
-        warehouseId,
-        { $push: { items: item } },
-        { new: true, runValidators: true }
-      );
-    },
-    updateItem: async (_parent: any, { warehouseId, index, newItem }: { warehouseId: string , index: number, newItem: string }) => {
-      return await Warehouse.findOneAndUpdate(
-        { _id: warehouseId },
-        //CHECK TO SEE IF THIS IS CORRECT SYNTAX
-        { $set: { [`items.${index}`]: newItem } },
-        { new: true, runValidators: true }
-      )
-    },
-    deleteItem: async (_parent: any, { warehouseId, item }: { warehouseId: string, item: string }) => {
-      return await Warehouse.findByIdAndUpdate(
-        warehouseId,
-        { $pull: { items: item } },
-        { new: true, runValidators: true }
-      )
-    },
-    updateUserStatus: async (_parent: any, { userId, status }: UpdateUserStatus) => {
+    updateUserStatus: async (_parent: any, { userId, status }: UpdateUserStatusArgs) => {
       return await User.findByIdAndUpdate(
-        { _id: userId },
-        // {$addToSet: {status: Boolean}},
-        { $addToSet: { status: status } },
-
-        { new: true, runValidators: true }
-      )
-
-    },
-    // deleteUser: async (_parent: any, {userId}) => {
-    //     return await User.findByIdAndDelete(userId);
-    // },
-    //WE NEED TO DELETE SOMETHING TO FULFILL THE PROJECT'S CRITERIA
-    deleteTruck: async (_parent: any, { truckId }: TruckArgs) => {
-      return await Truck.findByIdAndDelete(truckId)
-    },
-    deleteWarehouse: async (_parent: any, { warehouseId }: WarehouseArgs) => {
-      return await Warehouse.findByIdAndDelete(warehouseId)
-    },
-    updateWarehouseCapacity: async (_parent: any, { warehouseId, capacity }: { warehouseId: string, capacity: number }) => {
-      return await Warehouse.findByIdAndUpdate(
-        { _id: warehouseId },
-        //     { $addToSet: {status: status} },
-        { $set: { capacity: capacity } },
-        { new: true, runValidators: true }
+        userId,
+        { status },
+        { new: true }
       );
     },
-    // updateTruckStatus: async (_parent: any, { truckId, status }) => {
-    //   return await Truck.findByIdAndUpdate(\
-    //     { _id: truckId },
-    //     { $addToSet: {status: status} },
-    //     { new: true, runValidators: true }
-    //   );
-    // },
+    addTruck: async (_parent: any, { truckId, truckName, truckCapacity, driverName, status, assignedWarehouse }: AddTruckArgs) => {
+      const truck = await Truck.create({ truckId, truckName, truckCapacity, driverName, status, assignedWarehouse });
+      return truck;
+    },
+    deleteTruck: async (_parent: any, { truckId }: { truckId: string }) => {
+      return await Truck.findByIdAndDelete(truckId);
+    },
+    addWarehouse: async (_parent: any, { name, location, capacity, items }: AddWarehouseArgs) => {
+      const warehouse = await Warehouse.create({ name, location, capacity, items });
+      return warehouse;
+    },
+    updateWarehouseCapacity: async (_parent: any, { warehouseId, capacity }: { warehouseId: string; capacity: number }) => {
+      return await Warehouse.findByIdAndUpdate(
+        warehouseId,
+        { capacity },
+        { new: true }
+      );
+    },
+    deleteWarehouse: async (_parent: any, { warehouseId }: { warehouseId: string }) => {
+      return await Warehouse.findByIdAndDelete(warehouseId);
+    },
+    addItem: async (_parent: any, { warehouseId, item }: AddItemArgs) => {
+      return await Warehouse.findByIdAndUpdate(
+        warehouseId,
 
-    // Query to get the authenticated user's information
-    // The 'me' query relies on the context to check if the user is authenticated
+        { $push: { items: item } },
+        { new: true }
+      );
+    },
+      
+    updateItem: async (_parent: any, { warehouseId, index, newItem }: UpdateItemArgs) => {
+      const warehouse = await Warehouse.findById(warehouseId);
+      if (!warehouse) throw new Error('Warehouse not found');
+      warehouse.items[index] = newItem;
+      await warehouse.save();
+      return warehouse;
+    },
+    deleteItem: async (_parent: any, { warehouseId, itemName }: DeleteItemArgs) => {
+      return await Warehouse.findByIdAndUpdate(
+        warehouseId,
+        { $pull: { items: { itemName } } },
+        { new: true }
+      );
+    },
+  },
+};
 
-  }
-}
-export default resolvers
+
+export default resolvers;
