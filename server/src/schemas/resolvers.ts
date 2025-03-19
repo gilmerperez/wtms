@@ -11,7 +11,7 @@ interface LoginArgs {
 }
 // Define types for the arguments
 
-interface User{
+interface User {
   username: string,
   email: string,
   password: string,
@@ -19,7 +19,7 @@ interface User{
   status: string
 }
 
-interface Warehouse{
+interface Warehouse {
   warehouseId: string,
   name: string,
   location: string,
@@ -27,7 +27,7 @@ interface Warehouse{
   items: [Item]
 }
 
-interface Truck{
+interface Truck {
   truckId: string,
   truckName: string,
   truckCapacity: number,
@@ -158,8 +158,8 @@ const resolvers = {
       const token = signToken(user._id, user.role);
       return { token, user };
     },
-    addUser: async (_parent: any, { username, email, password, role, status }: AddUserArgs) => {
-      const user = await User.create({ username, email, password, role, status });
+    addUser: async (_parent: any, { username, email, password, role }: AddUserArgs) => {
+      const user = await User.create({ username, email, password, role });
       return user;
     },
     updateUser: async (_parent: any, { id, input }: { id: string; input: { role?: string; status?: string } }) => {
