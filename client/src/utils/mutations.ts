@@ -44,3 +44,11 @@ export const DEACTIVATE_USER = gql`
     }
   }
 `;
+
+export const REMOVE_TRUCK = gql`
+mutation deleteTruck($truckId: String){
+deleteTruck(truckId: $truckId){
+  _id
+  }
+}
+`;
