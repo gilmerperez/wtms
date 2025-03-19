@@ -15,11 +15,14 @@ export const LOGIN_USER = gql`
 export const ADD_USER = gql`
   mutation AddUser($username: String!, $email: String!, $password: String!, $role: String!, $status: String!) {
     addUser(username: $username, email: $email, password: $password, role: $role, status: $status) {
-      _id
-      username
-      email
-      role
-      status
+      token
+      user {
+        _id
+        username
+        email
+        role
+        status
+      }
     }
   }
 `;
@@ -43,4 +46,12 @@ export const DEACTIVATE_USER = gql`
       status
     }
   }
+`;
+
+export const REMOVE_TRUCK = gql`
+mutation deleteTruck($truckId: String!){
+deleteTruck(truckId: $truckId){
+  _id
+  }
+}
 `;

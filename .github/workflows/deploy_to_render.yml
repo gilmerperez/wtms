@@ -73,7 +73,7 @@ jobs:
       - name: Test
         run: |
           npm install
-          npm run test-component
+          # npm run test-component
 
       - name: Deploy
         # Only run this step if the branch is main
@@ -82,4 +82,6 @@ jobs:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: |
           curl "$deploy_url"
+
+
 

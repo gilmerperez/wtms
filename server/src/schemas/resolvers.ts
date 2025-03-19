@@ -11,7 +11,7 @@ interface LoginArgs {
 }
 // Define types for the arguments
 
-interface User{
+interface User {
   username: string,
   email: string,
   password: string,
@@ -19,7 +19,7 @@ interface User{
   status: string
 }
 
-interface Warehouse{
+interface Warehouse {
   warehouseId: string,
   name: string,
   location: string,
@@ -27,7 +27,7 @@ interface Warehouse{
   items: [Item]
 }
 
-interface Truck{
+interface Truck {
   truckId: string,
   truckName: string,
   truckCapacity: number,
@@ -37,7 +37,7 @@ interface Truck{
 
 }
 
-interface Item{
+interface Item {
   itemName: string,
   quantity: number,
   arrivalDate: string
@@ -136,7 +136,10 @@ const resolvers = {
       return await Truck.findById(truckId);
     },
     getTrucks: async () => {
-      return await Truck.find();
+      return await Truck.find().populate("assignedWarehouse").populate({
+        path: "assignedWarehouse",
+        populate: "items"
+      });
     },
     getWarehouse: async (_parent: any, { warehouseId }: { warehouseId: string }) => {
       return await Warehouse.findById(warehouseId);
@@ -159,10 +162,17 @@ const resolvers = {
       return { token, user };
     },
     addUser: async (_parent: any, { username, email, password, role, status }: AddUserArgs) => {
-      const user = await User.create({ username, email, password, role, status });
-      return user;
+      const user = await User.create({ username, email, password, role, status }) as { _id: string; role: string };
+      const token = signToken(user._id, user.role); // Generate a token
+      return { token, user }; // Return the token and user
     },
-
+    updateUser: async (_parent: any, { id, input }: { id: string; input: { role?: string; status?: string } }) => {
+      return await User.findByIdAndUpdate(
+        id,
+        { $set: input }, // Update only the fields provided in the input
+        { new: true }
+      );
+    },
     updateUserStatus: async (_parent: any, { userId, status }: UpdateUserStatusArgs) => {
       return await User.findByIdAndUpdate(
         userId,
@@ -175,7 +185,7 @@ const resolvers = {
       return truck;
     },
     deleteTruck: async (_parent: any, { truckId }: { truckId: string }) => {
-      return await Truck.findByIdAndDelete(truckId);
+      return await Truck.findOneAndDelete({ truckId });
     },
     addWarehouse: async (_parent: any, { name, location, capacity, items }: AddWarehouseArgs) => {
       const warehouse = await Warehouse.create({ name, location, capacity, items });
@@ -199,7 +209,7 @@ const resolvers = {
         { new: true }
       );
     },
-      
+
     updateItem: async (_parent: any, { warehouseId, index, newItem }: UpdateItemArgs) => {
       const warehouse = await Warehouse.findById(warehouseId);
       if (!warehouse) throw new Error('Warehouse not found');

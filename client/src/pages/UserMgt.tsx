@@ -87,25 +87,38 @@ const UserMgt = () => {
   // Editing a user
   const handleEditUser = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!editUser) return; // Ensure editUser is not null
     try {
-      await updateUser({ variables: { id: editUser!._id, input: editUser } });
-      setEditUser(null);
+      await updateUser({
+        variables: {
+          id: editUser._id,
+          input: {
+            role: editUser.role,
+            status: editUser.status, // Include status if needed
+          },
+        },
+      });
+      setEditUser(null); // Close the modal after successful update
     } catch (err) {
       console.error("Error updating user:", err);
     }
   };
 
   // Deactivating a user
-  const handleDeactivateUser = async (userId: string) => {
+  const handleDeactivateUser = async (
+    userId: string,
+    currentStatus: string
+  ) => {
     try {
+      const newStatus = currentStatus === "active" ? "inactive" : "active";
       await deactivateUser({
         variables: {
           userId,
-          status: "inactive", // Set status to "inactive"
+          status: newStatus, // Toggle between "active" and "inactive"
         },
       });
     } catch (err) {
-      console.error("Error deactivating user:", err);
+      console.error("Error updating user status:", err);
     }
   };
 
@@ -187,7 +200,7 @@ const UserMgt = () => {
                     Edit
                   </button>
                   <button
-                    onClick={() => handleDeactivateUser(user._id)}
+                    onClick={() => handleDeactivateUser(user._id, user.status)}
                     className="deactivateButton"
                     aria-label={`${
                       user.status === "active" ? "Deactivate" : "Activate"
