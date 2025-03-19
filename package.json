@@ -17,8 +17,9 @@
     "render-build": "npm install && npm run build",
     "render-start": "npm run server",
     "cypress": "npx cypress open",
-    "test": "npx cypress run --browser electron --headless",
-    "crypress:component": "cypress run --component",
+    "test": "npx cypress run --browser electron",
+    "test-component": "npx cypress run --component",
+    "test-gui": "npx cypress open",
     "set-up": "npm install && npm run build && npm run seed && npm run start:dev"
   },
   "keywords": [],
