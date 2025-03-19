@@ -136,7 +136,10 @@ const resolvers = {
       return await Truck.findById(truckId);
     },
     getTrucks: async () => {
-      return await Truck.find();
+      return await Truck.find().populate("assignedWarehouse").populate({
+        path: "assignedWarehouse",
+        populate: "items"
+      });
     },
     getWarehouse: async (_parent: any, { warehouseId }: { warehouseId: string }) => {
       return await Warehouse.findById(warehouseId);
@@ -181,7 +184,7 @@ const resolvers = {
       return truck;
     },
     deleteTruck: async (_parent: any, { truckId }: { truckId: string }) => {
-      return await Truck.findByIdAndDelete(truckId);
+      return await Truck.findOneAndDelete({truckId});
     },
     addWarehouse: async (_parent: any, { name, location, capacity, items }: AddWarehouseArgs) => {
       const warehouse = await Warehouse.create({ name, location, capacity, items });

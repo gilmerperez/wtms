@@ -19,20 +19,20 @@ const typeDefs = gql`
 }
 
   type Warehouse {
-    _id: ID!
-    name: String!
-    location: String!
-    capacity: Int!  # Added to match the model
-    items: [Item]!
+    _id: ID
+    name: String
+    location: String
+    capacity: Int # Added to match the model
+    items: [Item]
   }
 
   type Truck {
-    _id: ID!
-    truckId: String!
-    truckName: String!
-    truckCapacity: Int!
-    driverName: String!  # Changed to driverName to match the model
-    status: String!  # Changed to String to match the model
+    _id: ID
+    truckId: String
+    truckName: String
+    truckCapacity: Int
+    driverName: String
+    status: String  
     assignedWarehouse: Warehouse
   }
 
@@ -42,9 +42,9 @@ const typeDefs = gql`
   }
 
   type Item {
-    itemName: String!
-    quantity: Int!
-    arrivalDate: String!
+    itemName: String
+    quantity: Int
+    arrivalDate: String
   }
 
   input ItemInput {
@@ -68,7 +68,7 @@ const typeDefs = gql`
     addUser(username: String!, email: String!, password: String!, role: String! ): User
     addWarehouse(name: String!, location: String!, capacity: Int!, items: [ItemInput]): Warehouse
     addTruck(truckId: String!, truckName: String!, truckCapacity: Int!, driverName: String!, status: String!, assignedWarehouse: ID): Truck
-    deleteTruck(truckId: ID!): Truck
+    deleteTruck(truckId: String!): Truck
     deleteWarehouse(warehouseId: ID!): Warehouse
     updateUser(id: ID!, input: UserInput!): User
     updateUserStatus(userId: ID!, status: String!): User

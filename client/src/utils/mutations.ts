@@ -4,10 +4,10 @@ export const LOGIN_USER = gql`
   mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       token
-      user {
-        _id
-        username
-      }
+      # user {
+      #   _id
+      #   username
+      # }
     }
   }
 `;
@@ -43,4 +43,12 @@ export const DEACTIVATE_USER = gql`
       status
     }
   }
+`;
+
+export const REMOVE_TRUCK = gql`
+mutation deleteTruck($truckId: String!){
+deleteTruck(truckId: $truckId){
+  _id
+  }
+}
 `;
