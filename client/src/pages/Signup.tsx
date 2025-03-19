@@ -10,33 +10,21 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState<"Admin" | "Manager" | "Driver">("Admin");
-  const [addUser, { error }] = useMutation<
-    { addUser: { token: string } },
-    {
-      input: {
-        username: string;
-        email: string;
-        password: string;
-        role: string;
-      };
-    }
-  >(ADD_USER);
+  const [addUser, { error }] = useMutation(ADD_USER);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+  
     try {
       const { data } = await addUser({
         variables: {
-          input: {
-            username,
-            email,
-            password,
-            role,
-          },
+          username,
+          email,
+          password,
+          role
         },
       });
-
+  
       if (data?.addUser?.token) {
         AuthService.login(data.addUser.token); // Save token and redirect
         window.location.assign("/landing"); // Redirect to Landing page
