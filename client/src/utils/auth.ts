@@ -47,9 +47,9 @@ class AuthService {
   }
 
   // This method logs in the user by storing the token in localStorage and redirecting to the home page.
-  login(idToken: string) {
-    localStorage.setItem('id_token', idToken);
-    window.location.assign('/');
+  login(token: string) {
+    localStorage.setItem("id_token", token); // Save the token to localStorage
+    window.location.assign("/landing"); // Redirect to the landing page
   }
 
   // This method logs out the user by removing the token from localStorage and redirecting to the home page.

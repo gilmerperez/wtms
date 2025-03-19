@@ -14,20 +14,21 @@ const Signup = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     try {
       const { data } = await addUser({
         variables: {
           username,
           email,
           password,
-          role
+          role,
+          status: "active",
         },
       });
-  
+
       if (data?.addUser?.token) {
-        AuthService.login(data.addUser.token); // Save token and redirect
-        window.location.assign("/landing"); // Redirect to Landing page
+        AuthService.login(data.addUser.token);
+        window.location.assign("/landing");
       }
     } catch (err) {
       console.error("Signup error:", err);
