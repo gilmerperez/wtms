@@ -1,26 +1,26 @@
 /// <reference types="cypress" />
 import React from 'react';
-import { ApolloProvider, InMemoryCache, ApolloClient } from '@apollo/client'; // Ensure ApolloClient is imported
-import { BrowserRouter as Router } from 'react-router-dom'; // Import BrowserRouter for routing context
+// import { ApolloProvider, InMemoryCache, ApolloClient } from '@apollo/client'; // Ensure ApolloClient is imported
+// import { BrowserRouter as Router } from 'react-router-dom'; // Import BrowserRouter for routing context
 import Login from '../../client/src/pages/Login';  // Adjust the path as needed
 
-// Set up a simple Apollo Client with an in-memory cache for the test
-const client = new ApolloClient({
-  uri: '/graphql',  // This is fine for mock; no actual API call will be made
-  cache: new InMemoryCache(),
-});
+// // Set up a simple Apollo Client with an in-memory cache for the test
+// const client = new ApolloClient({
+//   uri: '/graphql',  // This is fine for mock; no actual API call will be made
+//   cache: new InMemoryCache(),
+// });
 
 describe('Login Component', () => {
-  beforeEach(() => {
-    // Mount the Login component wrapped inside ApolloProvider and Router
-    cy.mount(
-      <ApolloProvider client={client}>
-        <Router>
-          <Login />
-        </Router>
-      </ApolloProvider>
-    );
-  });
+//   beforeEach(() => {
+//     // Mount the Login component wrapped inside ApolloProvider and Router
+//     cy.mount(
+//     //   <ApolloProvider client={client}>
+//         // <Router>
+//           <Login />
+//         // </Router>
+//     //   </ApolloProvider>
+//     );
+//   });
 
 //   it('renders the login form correctly', () => {
 //     cy.get('[data-cy=email-input]').should('exist');
@@ -54,7 +54,8 @@ describe('Login Component', () => {
 //     cy.location('pathname').should('eq', '/landing');
 //   });
 
-  it('navigates to sign-up page when sign-up link is clicked', () => {
+  it('navigates to sign-up page when sign-up link is clicked', () => { 
+    cy.mount(<Login/>)
     cy.get('.signupLink a').click();
     cy.location('pathname').should('eq', '/signup');
   });
