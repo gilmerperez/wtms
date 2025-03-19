@@ -3,10 +3,44 @@ import Truck from "../models/Truck.js";
 import Warehouse from "../models/Warehouse.js";
 import { signToken, AuthenticationError } from '../utils/auth.js';
 
+
 // Define types for arguments
 interface LoginArgs {
   email: string;
   password: string;
+}
+// Define types for the arguments
+
+interface User{
+  username: string,
+  email: string,
+  password: string,
+  role: string,
+  status: string
+}
+
+interface Warehouse{
+  warehouseId: string,
+  name: string,
+  location: string,
+  capacity: number,
+  items: [Item]
+}
+
+interface Truck{
+  truckId: string,
+  truckName: string,
+  truckCapacity: number,
+  driverName: string,
+  status: string,
+  assignedWarehouse: Warehouse["warehouseId"]
+
+}
+
+interface Item{
+  itemName: string,
+  quantity: number,
+  arrivalDate: string
 }
 
 interface AddUserArgs {
@@ -17,9 +51,14 @@ interface AddUserArgs {
   status: string;
 }
 
+
 interface UpdateUserStatusArgs {
   userId: string;
   status: string;
+}
+
+interface UserArgs {
+  username: string
 }
 
 interface AddTruckArgs {
@@ -38,6 +77,7 @@ interface AddWarehouseArgs {
   items: any[];
 }
 
+
 interface AddItemArgs {
   warehouseId: string;
   item: any;
@@ -47,6 +87,22 @@ interface UpdateItemArgs {
   warehouseId: string;
   index: number;
   newItem: any;
+}
+
+interface addWarehouse {
+  name: string,
+  location: string,
+  capacity: number,
+  items: [Item]
+}
+
+interface AddTruck {
+  truckId: string,
+  truckName: string,
+  truckCapacity: number,
+  driverName: string,
+  status: string,
+  assignedWarehouse: number
 }
 
 interface DeleteItemArgs {
@@ -69,6 +125,7 @@ const resolvers = {
       }
       throw new AuthenticationError('Not authenticated');
     },
+
     getUser: async (_parent: any, { userId }: { userId: string }) => {
       return await User.findById(userId);
     },
@@ -105,6 +162,7 @@ const resolvers = {
       const user = await User.create({ username, email, password, role, status });
       return user;
     },
+
     updateUserStatus: async (_parent: any, { userId, status }: UpdateUserStatusArgs) => {
       return await User.findByIdAndUpdate(
         userId,
@@ -136,10 +194,12 @@ const resolvers = {
     addItem: async (_parent: any, { warehouseId, item }: AddItemArgs) => {
       return await Warehouse.findByIdAndUpdate(
         warehouseId,
+
         { $push: { items: item } },
         { new: true }
       );
     },
+      
     updateItem: async (_parent: any, { warehouseId, index, newItem }: UpdateItemArgs) => {
       const warehouse = await Warehouse.findById(warehouseId);
       if (!warehouse) throw new Error('Warehouse not found');
@@ -156,5 +216,6 @@ const resolvers = {
     },
   },
 };
+
 
 export default resolvers;
