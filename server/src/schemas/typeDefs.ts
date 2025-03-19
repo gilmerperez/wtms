@@ -10,6 +10,14 @@ const typeDefs = gql`
     status: String!  # Changed to String to match the model
   }
 
+  input UserInput {
+  username: String
+  email: String
+  password: String
+  role: String
+  status: String
+}
+
   type Warehouse {
     _id: ID!
     name: String!
@@ -62,6 +70,7 @@ const typeDefs = gql`
     addTruck(truckId: String!, truckName: String!, truckCapacity: Int!, driverName: String!, status: String!, assignedWarehouse: ID): Truck
     deleteTruck(truckId: ID!): Truck
     deleteWarehouse(warehouseId: ID!): Warehouse
+    updateUser(id: ID!, input: UserInput!): User
     updateUserStatus(userId: ID!, status: String!): User
     updateWarehouseCapacity(warehouseId: ID!, capacity: Int!): Warehouse
     addItem(warehouseId: ID!, item: ItemInput!): Warehouse
