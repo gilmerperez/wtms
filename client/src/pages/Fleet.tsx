@@ -6,30 +6,32 @@ const Fleet = () => {
 
   const { loading, data } = useQuery(QUERY_ALL_TRUCKS)
   //VERIFY IF THE .TRUCKS PART IS TOTALLY NECESSARY
-  const userData = data?.trucks
+  const userData = data?.getTrucks || []
 
   const [removeTruck] = useMutation(REMOVE_TRUCK)
 
-  const handleDeleteTruck = async (truckId: string) => {
-    const token = auth.loggedIn() ? auth.getToken() : null; 
-    if (!token){ 
-      return false; 
+  const handleDeleteTruck = async (e: any, truckId: string) => {
+    e.preventDefault()
+    console.log(truckId)
+    const token = auth.loggedIn() ? auth.getToken() : null;
+    if (!token) {
+      return false;
     }
-    try { 
-      const response = await removeTruck({ 
-        variables: { 
+    try {
+      const response = await removeTruck({
+        variables: {
           truckId
-         } 
-        });
-        
-        if(!response.data || !response.data.removeTruck) {
-          throw new Error('Something went wrong, please try again.')
         }
-        removeTruck(userData.truckId)
+      });
+
+      if (!response.data || !response.data.removeTruck) {
+        throw new Error('Something went wrong, please try again.')
       }
-      catch(err) {
-        console.error(err)        
-      }
+      // removeTruck(userData.truckId)
+    }
+    catch (err) {
+      console.error(err)
+    }
   };
 
   if (loading) {
@@ -38,18 +40,8 @@ const Fleet = () => {
 
   //I NEED TO ACCESS THE SEED DATA/DATABASE TO BE ABLE TO EXTRACT THAT DATA AND APPLY IT TO MY TABLE
   //
-  const tableRow = userData.map((userData: any) => {
-    return (
-      <tr key={userData._id}>
-        <td>{userData.truckId}</td>
-        <td>{userData.truckName}</td>
-        <td>{userData.truckCapacity}</td>
-        <td>{userData.driverName}</td>
-        <td>{userData.status}</td>
-        <td>{userData.assignedWarehouse}</td>
-      </tr>
-    )
-  })
+  // const tableRow =
+  console.log(userData)
   return (
     <main>
       <h1>Fleet Management</h1>
@@ -61,13 +53,25 @@ const Fleet = () => {
           <th>Driver</th>
           <th>Truck Status</th>
           <th>Truck Warehouse</th>
-          <button
-            onClick={() => handleDeleteTruck(userData.truckId)}
+          <th>Remove</th>
+        </tr>
+        {userData.map((user: any) => {
+          return (
+            <tr key={user._id}>
+              <td>{user.truckId}</td>
+              <td>{user.truckName}</td>
+              <td>{user.truckCapacity}</td>
+              <td>{user.driverName}</td>
+              <td>{user.status}</td>
+              <td>{user.assignedWarehouse.name}</td>
+              <button
+            onClick={(e) => handleDeleteTruck(e, user.truckId)}
           >
             Remove Truck
-            </button>
-        </tr>
-        {tableRow}
+          </button>
+            </tr>
+          )
+        })}
       </table>
     </main>
   );

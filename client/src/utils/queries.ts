@@ -85,13 +85,23 @@ export const QUERY_TRUCK = gql`
 export const QUERY_ALL_TRUCKS = gql`
   query getTrucks {
     getTrucks {
+    _id
+    truckId
+    truckName
+    truckCapacity
+    driverName
+    status
+    assignedWarehouse {
       _id
-      truckId
-      truckName
-      truckCapacity
-      driverName
-      status
-      assignedWarehouse
+      name
+      location
+      capacity
+      items {
+        itemName
+        quantity
+        arrivalDate
+      }
     }
+  }
   }
 `;
