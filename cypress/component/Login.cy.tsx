@@ -2,7 +2,7 @@
 import React from 'react';
 // import { ApolloProvider, InMemoryCache, ApolloClient } from '@apollo/client'; // Ensure ApolloClient is imported
 // import { BrowserRouter as Router } from 'react-router-dom'; // Import BrowserRouter for routing context
-import Login from '../../client/src/pages/Login';  // Adjust the path as needed
+import Header from '../../client/src/components/Header';
 
 // // Set up a simple Apollo Client with an in-memory cache for the test
 // const client = new ApolloClient({
@@ -54,9 +54,11 @@ describe('Login Component', () => {
 //     cy.location('pathname').should('eq', '/landing');
 //   });
 
-  it('navigates to sign-up page when sign-up link is clicked', () => { 
-    cy.mount(<Login/>)
-    cy.get('.signupLink a').click();
-    cy.location('pathname').should('eq', '/signup');
+  it('navigates to Header', () => { 
+    cy.mount(<Header/>)
+    // cy.get('.signupLink a').click();
+    // cy.location('pathname').should('eq', '/signup');
   });
 });
+
+

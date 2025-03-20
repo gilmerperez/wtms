@@ -66,7 +66,7 @@ const Login = () => {
           New user? <Link to="/signup">Sign up here</Link>
         </p>
       </div>
-    </div>
+     </div>
   );
 };
 

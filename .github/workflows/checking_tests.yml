@@ -107,11 +107,11 @@ jobs:
       - name: Build App
         run: npm run build
      
-      # - name: Cypress component testing
-      #   uses: cypress-io/github-action@v6
-      #   with:
-      #     component: true
+      - name: Cypress component testing
+        uses: cypress-io/github-action@v6
+        with:
+          component: true
      
-      # - name: Run vitest component tests
-      #   run: npm run test-component
+      - name: Run vitest component tests
+        run: npm run test-component
 
