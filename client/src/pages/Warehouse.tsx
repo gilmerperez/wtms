@@ -44,18 +44,18 @@ const Warehouse = () => {
     arrivalDate: new Date().toISOString(),
   });
   //
-  const [buyWarehouse] = useMutation(ADD_WAREHOUSE, {
-    refetchQueries: [{ query: QUERY_ALL_WAREHOUSES }],
-    onError: (err) => {
-      alert(`Error adding warehouse: ${err.message}`);
-    },
-  });
-  const [buyItem] = useMutation(ADD_ITEM, {
-    refetchQueries: [{ query: QUERY_ALL_WAREHOUSES }],
-    onError: (err) => {
-      alert(`Error adding item: ${err.message}`);
-    },
-  });
+  // const [buyWarehouse] = useMutation(ADD_WAREHOUSE, {
+  //   refetchQueries: [{ query: QUERY_ALL_WAREHOUSES }],
+  //   onError: (err) => {
+  //     alert(`Error adding warehouse: ${err.message}`);
+  //   },
+  // });
+  // const [buyItem] = useMutation(ADD_ITEM, {
+  //   refetchQueries: [{ query: QUERY_ALL_WAREHOUSES }],
+  //   onError: (err) => {
+  //     alert(`Error adding item: ${err.message}`);
+  //   },
+  // });
 
   const handleAddWarehouse = async (e: any) => {
     e.preventDefault();
