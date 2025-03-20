@@ -494,7 +494,7 @@ const UserMgt = () => {
 
       {/* Edit User Modal */}
       {editUser && (
-        <div className="modal show" tabIndex={-1} aria-labelledby="editUserModalLabel" aria-hidden="true">
+        <div className="modal fade show d-block" tabIndex={-1} aria-labelledby="editUserModalLabel" aria-hidden="true">
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
@@ -555,3 +555,5 @@ const UserMgt = () => {
 };
 
 export default UserMgt;
+
+
