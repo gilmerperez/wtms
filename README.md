@@ -40,6 +40,12 @@ To start the application, run the following commands:
 npm run set-up
 ```
 
+## Mock-Up
+
+![Login Page](./assets/Screenshots/wtms1.jpg)
+![User Management Page](./assets/Screenshots/wtms3.jpg)
+![Fleet Management Page](./assets/Screenshots/wtms2.jpg)
+
 ## Instructions
 
 ### 1. Setting up the project
