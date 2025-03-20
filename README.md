@@ -40,6 +40,12 @@ To start the application, run the following commands:
 npm run set-up
 ```
 
+## Mock-Up
+
+![Login Page](./assets/Screenshots/wtms1.jpg)
+![User Management Page](./assets/Screenshots/wtms3.jpg)
+![Fleet Management Page](./assets/Screenshots/wtms2.jpg)
+
 ## Instructions
 
 ### 1. Setting up the project
@@ -116,6 +122,7 @@ This project relies on the following tools and technologies:
 
 ## Additional Resources
 
+- Created by: Gilmer Perez | Pedro Enderica | Raheem Senegal | Pechimuthu Konar
 - GitHub Repository: [muthukonar/wtms](https://github.com/muthukonar/WTMS)
 - Deployed Application: [WTMS on Render](https://wtms-7utw.onrender.com/)
 - React Documentation: [React Official Guide](https://react.dev/learn)
