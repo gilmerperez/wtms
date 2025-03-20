@@ -32,13 +32,13 @@ const Login = () => {
 
   return (
     <div className="container">
-      <div className="topBar">
+      {/* <div className="topBar">
         <img
           src="assets/logos/logo_noBg.png"
           alt="WTMS Logo"
           className="logo"
         />
-      </div>
+      </div> */}
 
       <div className="loginBox">
         <h1 className="loginTitle">Login</h1>

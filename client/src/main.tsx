@@ -14,6 +14,7 @@ import Fleet from "./pages/Fleet";
 import UserMgt from "./pages/UserMgt";
 import Landing from "./pages/Landing.js";
 import Warehouse from "./pages/Warehouse";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // ProtectedRoute function to block access to website if user not loged in
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
