@@ -1,13 +1,12 @@
 import gql from 'graphql-tag';
 
 const typeDefs = gql`
-
   type User {
     _id: ID!
     username: String!
     email: String!
     role: String!
-    status: String!  # Changed to String to match the model
+    status: String!
   }
 
   input UserInput {
@@ -22,7 +21,7 @@ const typeDefs = gql`
     _id: ID
     name: String
     location: String
-    capacity: Int # Added to match the model
+    capacity: Int
     items: [Item]
   }
 
