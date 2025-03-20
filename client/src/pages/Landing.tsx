@@ -1,31 +1,27 @@
-import AuthService from "../utils/auth";
-import { useState, useEffect } from "react";
+// Styles
+const styles: { main: React.CSSProperties; heading: React.CSSProperties } = {
+  main: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100vh",
+    textAlign: "center",
+    fontFamily: "Arial, sans-serif",
+    backgroundColor: "#f8f9fa",
+  },
+  heading: {
+    fontSize: "2.5rem",
+    fontWeight: "bold",
+    color: "black",
+  },
+};
 
 const Landing = () => {
-  const [user, setUser] = useState<{ username: string } | null>(null);
-
-  useEffect(() => {
-    // Fetch user data from the token
-    const profile = AuthService.getProfile();
-    if (profile) {
-      setUser({ username: profile.data.username });
-    }
-  }, []);
-
   return (
-    <main>
-      <h1>Landing</h1>
-      {AuthService.loggedIn() ? (
-        <>
-          <p>Welcome, {user?.username}!</p>
-          <p>You are now logged in.</p>
-        </>
-      ) : (
-        <>
-          <p>Welcome to the Landing Page</p>
-          <p>Please log in or sign up to continue.</p>
-        </>
-      )}
+    <main style={styles.main}>
+      <h1 style={styles.heading}>
+        Welcome to the Warehouse and Transport Management System
+      </h1>
     </main>
   );
 };
