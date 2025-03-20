@@ -1,11 +1,5 @@
 import { Schema, model, Document } from 'mongoose';
 
-// interface IItem {
-//   itemName: string;
-//   quantity: number;
-//   arrivalDate: Date;
-// }
-
 interface IWarehouse extends Document {
   name: string;
   location: string;

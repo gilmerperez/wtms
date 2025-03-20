@@ -9,7 +9,6 @@ interface LoginArgs {
   email: string;
   password: string;
 }
-// Define types for the arguments
 
 interface User {
   username: string,
@@ -34,7 +33,6 @@ interface Truck {
   driverName: string,
   status: string,
   assignedWarehouse: Warehouse["warehouseId"]
-
 }
 
 interface Item {
@@ -50,7 +48,6 @@ interface AddUserArgs {
   role: string;
   status: string;
 }
-
 
 interface UpdateUserStatusArgs {
   userId: string;
@@ -77,7 +74,6 @@ interface AddWarehouseArgs {
   items: any[];
 }
 
-
 interface AddItemArgs {
   warehouseId: string;
   item: any;
@@ -88,22 +84,6 @@ interface UpdateItemArgs {
   index: number;
   newItem: any;
 }
-
-// interface addWarehouse {
-//   name: string,
-//   location: string,
-//   capacity: number,
-//   items: [Item]
-// }
-
-// interface addTruck {
-//   truckId: string,
-//   truckName: string,
-//   truckCapacity: number,
-//   driverName: string,
-//   status: string,
-//   assignedWarehouse: number
-// }
 
 interface DeleteItemArgs {
   warehouseId: string;
@@ -158,7 +138,7 @@ const resolvers = {
       if (!user) {
         throw new AuthenticationError('Invalid email or password');
       }
-      
+
       const correctPw = await user.isCorrectPassword(password);
       if (!correctPw) {
         throw new AuthenticationError('Invalid email or password');
@@ -186,19 +166,19 @@ const resolvers = {
       );
     },
 
-    
+
     deleteUser: async (_parent: any, { userId }: { userId: string }): Promise<DeleteUserResponse> => {
       const user = await User.findById(userId);
       if (!user) {
         throw new Error('User not found');
       }
       await User.findByIdAndDelete(userId);
-       return {
+      return {
         message: `User  has been deleted successfully.`,
-        
+
       };
     },
-    
+
     addTruck: async (_parent: any, { truckId, truckName, truckCapacity, driverName, status, assignedWarehouse }: AddTruckArgs) => {
       const truck = await Truck.create({ truckId, truckName, truckCapacity, driverName, status, assignedWarehouse });
       return truck;
@@ -245,8 +225,5 @@ const resolvers = {
     },
   },
 };
-
-
-
 
 export default resolvers;
