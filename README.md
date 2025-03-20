@@ -42,20 +42,20 @@ npm run set-up
 
 ## Mock-Up
 
-Login Page
-![Login Page]()
+**Login Page**
+![Login Page](./assets/screenshots/wtmsloginpage.jpg)
 
-Signup Page
-![Signup Page]()
+**Signup Page**
+![Signup Page](./assets/screenshots/wtmssignuppage.jpg)
 
-User Management Page
-![User Management Page]()
+**User Management Page**
+![User Management Page](./assets/screenshots/wtmsuserpage.jpg)
 
-Fleet Management Page
-![Fleet Management Page]()
+**Fleet Management Page**
+![Fleet Management Page](./assets/screenshots/wtmsfleetpage.jpg)
 
-Warehouse Management Page
-![Warehouse Management Page]()
+**Warehouse Management Page**
+![Warehouse Management Page](./assets/screenshots/wtmswarehousepage.jpg)
 
 ## Instructions
 
