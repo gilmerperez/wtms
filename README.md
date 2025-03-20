@@ -42,6 +42,9 @@ npm run set-up
 
 ## Mock-Up
 
+Walkthrough video link :- https://drive.google.com/file/d/175QEYf4XMfcXLXiS2bVVTcGWe2ekCSPn/view?usp=sharing
+
+
 Component testing :-
 !["Screenshot1”](./client/src/assets/WWW1.png)
 !["Screenshot2”](./client/src/assets/WWW2.png)
