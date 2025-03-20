@@ -32,14 +32,6 @@ const Login = () => {
 
   return (
     <div className="container">
-      {/* <div className="topBar">
-        <img
-          src="assets/logos/logo_noBg.png"
-          alt="WTMS Logo"
-          className="logo"
-        />
-      </div> */}
-
       <div className="loginBox">
         <h1 className="loginTitle">Login</h1>
         <form className="form" onSubmit={handleSubmit}>
@@ -66,10 +58,8 @@ const Login = () => {
           New user? <Link to="/signup">Sign up here</Link>
         </p>
       </div>
-     </div>
+    </div>
   );
 };
 
 export default Login;
-
-
