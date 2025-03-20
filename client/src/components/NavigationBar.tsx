@@ -12,12 +12,12 @@ const styles = {
     width: "100%",
     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
   },
-  logoSection: {
-    flex: 1, // Takes up space for the logo
-  },
-  logo: {
-    height: "40px",
-  },
+  // logoSection: {
+  //   flex: 1, // Takes up space for the logo
+  // },
+  // logo: {
+  //   height: "40px",
+  // },
   links: {
     display: "flex",
     gap: "20px", // Space between links
@@ -56,10 +56,10 @@ const NavigationBar = () => {
 
   return (
     <div style={styles.navbar}>
-      {/* Logo Section */}
+      {/* Logo Section
       <div style={styles.logoSection}>
         <img src="/logo.png" alt="WTMS Logo" style={styles.logo} />
-      </div>
+      </div> */}
 
       {/* Navigation Links */}
       <div style={styles.links}>
