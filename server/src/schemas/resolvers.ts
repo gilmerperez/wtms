@@ -110,6 +110,10 @@ interface DeleteItemArgs {
   itemName: string;
 }
 
+interface DeleteUserResponse {
+  message: string;
+}
+
 interface Context {
   user?: {
     _id: string;
@@ -154,6 +158,7 @@ const resolvers = {
       if (!user) {
         throw new AuthenticationError('Invalid email or password');
       }
+      
       const correctPw = await user.isCorrectPassword(password);
       if (!correctPw) {
         throw new AuthenticationError('Invalid email or password');
@@ -180,6 +185,20 @@ const resolvers = {
         { new: true }
       );
     },
+
+    
+    deleteUser: async (_parent: any, { userId }: { userId: string }): Promise<DeleteUserResponse> => {
+      const user = await User.findById(userId);
+      if (!user) {
+        throw new Error('User not found');
+      }
+      await User.findByIdAndDelete(userId);
+       return {
+        message: `User  has been deleted successfully.`,
+        
+      };
+    },
+    
     addTruck: async (_parent: any, { truckId, truckName, truckCapacity, driverName, status, assignedWarehouse }: AddTruckArgs) => {
       const truck = await Truck.create({ truckId, truckName, truckCapacity, driverName, status, assignedWarehouse });
       return truck;
@@ -226,6 +245,8 @@ const resolvers = {
     },
   },
 };
+
+
 
 
 export default resolvers;

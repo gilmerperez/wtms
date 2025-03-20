@@ -42,9 +42,38 @@ npm run set-up
 
 ## Mock-Up
 
-![Login Page](./assets/Screenshots/wtms1.jpg)
-![User Management Page](./assets/Screenshots/wtms3.jpg)
-![Fleet Management Page](./assets/Screenshots/wtms2.jpg)
+Render deployed link :- https://wtms-7utw.onrender.com
+
+Walkthrough video link :- https://drive.google.com/file/d/175QEYf4XMfcXLXiS2bVVTcGWe2ekCSPn/view?usp=sharing
+
+
+Component testing :-
+!["Screenshot1”](./client/src/assets/WWW1.png)
+!["Screenshot2”](./client/src/assets/WWW2.png)
+
+Login Page :- 
+!["Screenshot3”](./client/src/assets/WWW3.png)
+!["Screenshot4”](./client/src/assets/WWW4.png)
+Landing page :- 
+!["Screenshot5”](./client/src/assets/WWW5.png)
+User Management Page:-
+!["Screenshot6”](./client/src/assets/WWW6.png)
+Add User :- 
+!["Screenshot7”](./client/src/assets/WWW7.png)
+user Added :-
+!["Screenshot8”](./client/src/assets/WWW8.png)
+Edit User :-
+!["Screenshot9”](./client/src/assets/WWW9.png)
+user Edited :-
+!["Screenshot10”](./client/src/assets/WWW10.png)
+user Inactivated :-
+!["Screenshot11”](./client/src/assets/WWW11.png)
+Delete User:-
+!["Screenshot12”](./client/src/assets/WWW12.png)
+User Deleted:-
+!["Screenshot13”](./client/src/assets/WWW13.png)
+
+
 
 ## Instructions
 
