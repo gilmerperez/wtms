@@ -122,6 +122,7 @@ This project relies on the following tools and technologies:
 
 ## Additional Resources
 
+- Created by: Gilmer Perez | Pedro Enderica | Raheem Senegal | Pechimuthu Konar
 - GitHub Repository: [muthukonar/wtms](https://github.com/muthukonar/WTMS)
 - Deployed Application: [WTMS on Render](https://wtms-7utw.onrender.com/)
 - React Documentation: [React Official Guide](https://react.dev/learn)
