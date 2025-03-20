@@ -68,6 +68,19 @@ export const QUERY_ALL_WAREHOUSES = gql`
   }
 `;
 
+export const QUERY_ONE_WAREHOUSE_ITEMS = gql`
+  query getWarehouseItems($warehouseId: ID!) {
+    getWarehouseItems(warehouseId: $warehouseId) {
+      items {
+        itemName
+        quantity
+        arrivalDate
+      }
+    }
+  }
+`;
+
+
 export const QUERY_TRUCK = gql`
   query truck($truckId: ID!) {
     me {
