@@ -37,14 +37,6 @@ const Signup = () => {
 
   return (
     <div className="signup-container">
-      <div className="signup-top-bar">
-        <img
-          src="assets\logos\logo_noBg.png"
-          alt="WTMS Logo"
-          className="signup-logo"
-        />
-      </div>
-
       <div className="signup-box">
         <h1 className="signup-title">Sign Up</h1>
         <form className="signup-form" onSubmit={handleSubmit}>
