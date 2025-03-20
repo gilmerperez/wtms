@@ -42,6 +42,8 @@ npm run set-up
 
 ## Mock-Up
 
+Render deployed link :- https://wtms-7utw.onrender.com
+
 Walkthrough video link :- https://drive.google.com/file/d/175QEYf4XMfcXLXiS2bVVTcGWe2ekCSPn/view?usp=sharing
 
 
