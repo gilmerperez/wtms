@@ -1,4 +1,7 @@
 import { useQuery, useMutation } from "@apollo/client";
+import "../styles/UserMgt.css";
+import { useState } from "react";
+// import { Link } from "react-router-dom";
 import auth from "../utils/auth";
 import { QUERY_ALL_WAREHOUSES } from "../utils/queries";
 import { 
@@ -23,27 +26,67 @@ const Warehouse = () => {
   const [addItem] = useMutation(ADD_ITEM);
   const [deleteItem] = useMutation(DELETE_ITEM);
   const [updateItem] = useMutation(UPDATE_ITEM);
+  //
+  const [newWarehouse, setNewWarehouse] = useState<{
+    name: string;
+    location: string;
+    capacity: number;
+    items: { itemName: string; quantity: number; arrivalDate: string }[];
+  }>({
+    name: "",
+    location: "",
+    capacity: 0,
+    items: [],
+  });
+  const [newItem, setNewItem] = useState({
+    itemName: "",
+    quantity: 0,
+    arrivalDate: new Date().toISOString(),
+  });
+  //
+  const [buyWarehouse] = useMutation(ADD_WAREHOUSE, {
+    refetchQueries: [{ query: QUERY_ALL_WAREHOUSES }],
+    onError: (err) => {
+      alert(`Error adding warehouse: ${err.message}`);
+    },
+  });
+  const [buyItem] = useMutation(ADD_ITEM, {
+    refetchQueries: [{ query: QUERY_ALL_WAREHOUSES }],
+    onError: (err) => {
+      alert(`Error adding item: ${err.message}`);
+    },
+  });
 
   const handleAddWarehouse = async (e: any) => {
     e.preventDefault();
-    const token = auth.loggedIn() ? auth.getToken() : null;
-    if (!token) {
-      return false;
+    // const token = auth.loggedIn() ? auth.getToken() : null;
+    // if (!token) {
+    //   return false;
+    if (!newWarehouse.name || !newWarehouse.location || !newWarehouse.capacity) {
+      alert("Please fill in all fields.");
+      return;
     }
     try {
       const response = await addWarehouse({
         variables: {
-          name: "New Warehouse",
-          location: "New Location",
-          capacity: 1000,
-          items: [
-            {
-              itemName: "New Item",
-              quantity: 10,
-              arrivalDate: new Date().toISOString(),
-            },
-          ]
+          name: newWarehouse.name,
+          location: newWarehouse.location,
+          capacity: newWarehouse.capacity,
+          items: []
         },
+      });
+
+      setNewWarehouse({
+        name: "Miami Warehouse 1",
+        location: "Miami, USA",
+        capacity: 1100,
+        items: [
+          {
+            itemName: "New Item",
+            quantity: 10,
+            arrivalDate: new Date().toISOString(),
+          },
+        ],
       });
       console.log(response.data);
     } catch (err) {
@@ -115,10 +158,35 @@ const Warehouse = () => {
     return <h2>Loading...</h2>;
   }
   return (
-    <main>
-      <h1>Warehouse Management</h1>
-      <button onClick={handleAddWarehouse}>Add Warehouse</button>
-      <table className="warehouse-table">
+    <main className="container">
+      <h1 className="heading">Warehouse Management</h1>
+      <div className="add-warehouse-form">
+        <h2 className="heading">Add New Warehouse</h2>
+        <form onSubmit={handleAddWarehouse}>
+          <input
+            type="text"
+            placeholder="Warehouse Name"
+            value={newWarehouse.name}
+            onChange={(e) => setNewWarehouse({ ...newWarehouse, name: e.target.value })}
+          />
+          <input
+            type="text"
+            placeholder="Location"
+            value={newWarehouse.location}
+            onChange={(e) => setNewWarehouse({ ...newWarehouse, location: e.target.value })}
+          />
+          <input
+            type="number"
+            placeholder="Capacity"
+            value={newWarehouse.capacity}
+            onChange={(e) => setNewWarehouse({ ...newWarehouse, capacity: parseInt(e.target.value) })}
+          />
+          <button type="submit">Add Warehouse</button>
+        </form>
+      </div>
+      <div className="section">
+      <h2 className="heading">Warehouses</h2>
+      <table className="table">
         <thead>
           <tr>
             <th>Warehouse ID</th>
@@ -140,9 +208,32 @@ const Warehouse = () => {
           ))}
         </tbody>
       </table>
-      <h2>Items in Warehouses</h2>
-      <button onClick={(e) => handleAddItem(e, warehouseData[0]?._id)}>Add Item to Warehouse</button>
-      <table className="items-table">
+      </div>
+      <div className="section">
+      {/* <button onClick={(e) => handleAddItem(e, warehouseData[0]?._id)}>Add Item to Warehouse</button> */}
+      <h2 className="heading">Add New Item</h2>
+      <form onSubmit={(e) => handleAddItem(e, warehouseData[0]?._id)}>
+        <input
+          type="text"
+          placeholder="Item Name"
+          value={newItem.itemName}
+          onChange={(e) => setNewItem({ ...newItem, itemName: e.target.value })}
+        />
+        <input
+          type="number"
+          placeholder="Quantity"
+          value={newItem.quantity}
+          onChange={(e) => setNewItem({ ...newItem, quantity: parseInt(e.target.value) })}
+        />
+        <input
+          type="date"
+          value={newItem.arrivalDate.split("T")[0]}
+          onChange={(e) => setNewItem({ ...newItem, arrivalDate: e.target.value })}
+        />
+        <button type="submit">Add Item</button>
+      </form>
+      <h2 className="heading">Items in Warehouses</h2>
+      <table className="table">
         <thead>
           <tr>
             <th>Item Name</th>
@@ -167,6 +258,7 @@ const Warehouse = () => {
           ))}
         </tbody>
       </table>
+      </div>
     </main>
   );
 
