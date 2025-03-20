@@ -42,54 +42,36 @@ npm run set-up
 
 ## Mock-Up
 
-Render deployed link :- https://wtms-7utw.onrender.com
+Login Page
+![Login Page]()
 
-Walkthrough video link :- https://drive.google.com/file/d/175QEYf4XMfcXLXiS2bVVTcGWe2ekCSPn/view?usp=sharing
+Signup Page
+![Signup Page]()
 
+User Management Page
+![User Management Page]()
 
-Component testing :-
-!["Screenshot1”](./client/src/assets/WWW1.png)
-!["Screenshot2”](./client/src/assets/WWW2.png)
+Fleet Management Page
+![Fleet Management Page]()
 
-Login Page :- 
-!["Screenshot3”](./client/src/assets/WWW3.png)
-!["Screenshot4”](./client/src/assets/WWW4.png)
-Landing page :- 
-!["Screenshot5”](./client/src/assets/WWW5.png)
-User Management Page:-
-!["Screenshot6”](./client/src/assets/WWW6.png)
-Add User :- 
-!["Screenshot7”](./client/src/assets/WWW7.png)
-user Added :-
-!["Screenshot8”](./client/src/assets/WWW8.png)
-Edit User :-
-!["Screenshot9”](./client/src/assets/WWW9.png)
-user Edited :-
-!["Screenshot10”](./client/src/assets/WWW10.png)
-user Inactivated :-
-!["Screenshot11”](./client/src/assets/WWW11.png)
-Delete User:-
-!["Screenshot12”](./client/src/assets/WWW12.png)
-User Deleted:-
-!["Screenshot13”](./client/src/assets/WWW13.png)
-
-
+Warehouse Management Page
+![Warehouse Management Page]()
 
 ## Instructions
 
-### 1. Setting up the project
+### 1. Setting up the application
 
-Clone the repository
+Clone the repository:
 ```bash
-git clone git@github.com:muthukonar/WTMS.git
+git clone git@github.com:gilmerperez/wtms.git
 ```
 
-Navigate to the project directory
+Navigate to the project directory:
 ```bash
 cd wtms
 ```
 
-Install dependencies
+Install dependencies:
 ```bash
 npm install
 ```
@@ -102,19 +84,19 @@ npm run set-up
 
 ### 3. Using the Application
 
-1. **Login or Signup:**
+**Login or Signup**
 - Use the login form to access the system.
 - New users can sign up by filling out the signup form.
 
-2. **User Management:**
+**User Management**
 - Admins can add, edit, and deactivate users.
 - View a list of all users with their roles and statuses.
 
-3. **Truck Management:**
+**Truck Management**
 - Add, edit, or remove trucks.
 - Assign drivers and update delivery statuses.
 
-4. **Warehouse Management:**
+**Warehouse Management**
 - Add, edit, or delete warehouses.
 - Track inventory levels and update item details.
 
@@ -151,11 +133,7 @@ This project relies on the following tools and technologies:
 
 ## Additional Resources
 
-- Created by: Gilmer Perez | Pedro Enderica | Raheem Senegal | Pechimuthu Konar
-- GitHub Repository: [muthukonar/wtms](https://github.com/muthukonar/WTMS)
-- Deployed Application: [WTMS on Render](https://wtms-7utw.onrender.com/)
 - React Documentation: [React Official Guide](https://react.dev/learn)
 - Node.js Documentation: [Node.js Official Guide](https://nodejs.org/docs/latest/api/)
 - GraphQL Documentation: [GraphQL Official Guide](https://graphql.org/learn/)
 - MongoDB Documentation: [MongoDB Official Guide](https://www.mongodb.com/docs/)
-test
